@@ -57,7 +57,7 @@
 }
 .pink  { color: var(--pink); }
 .outline {
-  -webkit-text-stroke: color: var(--mint);
+  color: var(--mint);
 }
 
 .heroSub {
