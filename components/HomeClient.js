@@ -54,9 +54,7 @@ export default function HomeClient({ posts, latest }) {
           </h1>
 
           <p className={styles.heroSub}>
-            Hi, I&apos;m Lindsay — a designer and lifelong learner writing about
-            graphic design, visual thinking, and what happens when creative
-            disciplines collide.
+            Hi, I&apos;m Lindsay — a graphic designer and lifelong learner writing about the intersection of visual design, creative learning, AI, and human-centered innovation.
           </p>
 
           <div className={styles.heroCtas}>
