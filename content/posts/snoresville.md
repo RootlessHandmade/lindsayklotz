@@ -95,3 +95,7 @@ Because if a fictional pillow company can wake up its learners…
 …your organization can too.
 
 ![snoresville footer](/static/images/sv-print-pdf.png)
+
+<a href="/posts/snoresville/snoresville-guide.pdf" download className="btn-primary">
+  Download the full guide →
+</a>
