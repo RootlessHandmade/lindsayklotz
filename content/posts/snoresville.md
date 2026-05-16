@@ -51,15 +51,26 @@ Instead of forcing employees through rule-heavy slides, Snoresville built fictio
 Snoresville realized serious topics don’t need serious delivery. They added playful moments like a forklift named Sir Lifts-a-Lot, fake headlines about pillow avalanches, and surprise appearances from Stanley Snooze whenever mistakes got expensive. The humor made people pay attention—but the lessons still landed.
 
 ### 3. They Stopped Holding Learners Hostage for Three Hours
+
+![snoresville part 3](/static/images/sv-hostage.png)
+
 Instead of one massive training marathon, Snoresville broke learning into short, useful moments. Employees got five-minute refreshers, weekly scenario challenges, and quick mobile modules they could revisit when needed. Because nobody has ever said, “I wish that compliance module were longer.”
 
 ### 4. They Made Training Something People Could Do—Not Just Read
+
+![snoresville part 4](/static/images/sv-could-do.png)
+
 Dense paragraphs and endless clicking were replaced with decision maps, animated workflows, drag-and-drop activities, and “spot the risk” moments. Once learners started interacting with the material instead of surviving it, retention improved quickly.
 
 ### 5. They Connected Every Topic to Real Life
+
+![snoresville part 5](/static/images/sv-real-life.png)
+
 Rather than presenting policies in a vacuum, Snoresville showed employees why each topic mattered. Safety protected teammates. Accuracy reduced waste. Proper handling improved customer trust. Stronger knowledge lowered stress and turnover. Once people understood the why, the content stopped feeling like background noise.
 
 ### The Results at Snoresville Pillow & Co.
+
+![snoresville results](/static/images/sv-results.png)
 
 Within 90 days of redesigning training, the difference was impossible to ignore. Errors dropped by 38%, managers saw far fewer repeat mistakes, and new hires reported feeling much more confident in their roles. Voluntary turnover also declined, proving that better training can improve more than knowledge alone.
 
@@ -68,6 +79,8 @@ Perhaps the biggest surprise? One employee described the new compliance program 
 Even better, nobody labeled another pillow “flammable.”
 
 ### What Learning Teams Can Take Away
+
+![snoresville take aways](/static/images/sv-check-in.png)
 
 If Snoresville teaches us anything, it’s that compliance training doesn’t have to be lifeless to be effective. People remember what feels relevant, interactive, and human. They learn faster when they can practice decisions instead of passively clicking through content. And they engage more when the experience respects their time and attention.
 
@@ -81,3 +94,4 @@ Because if a fictional pillow company can wake up its learners…
 
 …your organization can too.
 
+![snoresville footer](/static/images/sv-print-pdf.png)
