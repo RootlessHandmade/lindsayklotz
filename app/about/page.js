@@ -18,28 +18,23 @@ export default function About() {
         <h1 className={styles.title}>Hi, I&apos;m Lindsay.</h1>
         <div className={styles.prose}>
           <p>
-            I&apos;m a designer and lifelong learner based in Grand Rapids, MI. I write about graphic design, visual thinking, creative learning, and the intersection where creativity, innovation, AI, and human-centered learning meet.
+            I&apos;m a learning developer focused on the intersection where creativity, innovation, AI, and human-centered learning meet.
           </p>
           <p>
-            This blog is where I think out loud — sharing what I&apos;m learning,
-            what I&apos;m making, and the ideas that keep me up at night in the best way.
+            I&apos;ve spent the last 11 years in L&D rescuing people from bloated content, sleepy courses, and the quiet despair of “click next to continue.”
+          </p>
+          <p>
+          This blog is where I explore the things I keep coming back to in L&D: useful design, creative problem-solving, AI, and the strange little art of making people care.
           </p>
           <p>
             If you want to follow along, <a href="/subscribe">subscribe to my newsletter</a>.
             I send email sparingly — no fluff, just ideas worth your time.
           </p>
 
-          <h2>What I write about</h2>
-          <ul>
-            <li><strong>Graphic design</strong> — typography, color, layout, visual systems</li>
-            <li><strong>Learning</strong> — how to get better at creative work</li>
-            <li><strong>Innovation</strong> — what happens when design meets other disciplines</li>
-          </ul>
-
           <h2>Get in touch</h2>
           <p>
             Find me at <a href="https://lindsayklotz.com">lindsayklotz.com</a> or
-            reach out via <a href="mailto:hello@lindsayklotz.com">hello@lindsayklotz.com</a>.
+            reach out via <a href="mailto:rootlesshandmade@gmail.com">rootlesshandmade@gmail.com</a>.
           </p>
         </div>
       </main>
