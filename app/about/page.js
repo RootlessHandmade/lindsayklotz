@@ -18,9 +18,7 @@ export default function About() {
         <h1 className={styles.title}>Hi, I&apos;m Lindsay.</h1>
         <div className={styles.prose}>
           <p>
-            I&apos;m a designer and lifelong learner based in [your city]. I write about
-            graphic design, visual thinking, creative learning, and what happens when
-            disciplines collide in unexpected ways.
+            I&apos;m a designer and lifelong learner based in Grand Rapids, MI. I write about graphic design, visual thinking, creative learning, and the intersection where creativity, innovation, AI, and human-centered learning meet.
           </p>
           <p>
             This blog is where I think out loud — sharing what I&apos;m learning,
@@ -28,7 +26,7 @@ export default function About() {
           </p>
           <p>
             If you want to follow along, <a href="/subscribe">subscribe to my newsletter</a>.
-            I send one email a week — no fluff, just ideas worth your time.
+            I send email sparingly — no fluff, just ideas worth your time.
           </p>
 
           <h2>What I write about</h2>
