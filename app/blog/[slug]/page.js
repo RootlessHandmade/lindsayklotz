@@ -52,6 +52,27 @@ export default async function PostPage({ params }) {
           dangerouslySetInnerHTML={{ __html: contentHtml }}
         />
 
+        {/* ── Download button ── */}
+        {post.downloadUrl && (
+          <div className={styles.downloadBox}>
+            <div className={styles.downloadInner}>
+              <div className={styles.downloadText}>
+                <p className={styles.downloadLabel}>
+                  {post.downloadLabel || 'Download'}
+                </p>
+                <p className={styles.downloadSub}>Free PDF — no email required</p>
+              </div>
+              <a
+                href={post.downloadUrl}
+                download
+                className={styles.downloadBtn}
+              >
+                ↓ Download PDF
+              </a>
+            </div>
+          </div>
+        )}
+
         <div className={styles.back}>
           <a href="/blog" className={styles.backLink}>← Back to all posts</a>
         </div>

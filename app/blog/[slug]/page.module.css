@@ -42,15 +42,70 @@
 
 .prose { padding-top: 8px; }
 
-.back { margin-top: 60px; padding-top: 32px; border-top: 0.5px solid var(--border); }
+/* ── Download box ── */
+.downloadBox {
+  margin-top: 56px;
+  border-radius: 14px;
+  background: var(--paper);
+  border: 0.5px solid var(--border);
+  overflow: hidden;
+}
+
+.downloadInner {
+  padding: 28px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.downloadText { display: flex; flex-direction: column; gap: 4px; }
+
+.downloadLabel {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--ink);
+  letter-spacing: -.01em;
+}
+
+.downloadSub {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.downloadBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--pink);
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: .02em;
+  padding: 14px 28px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: opacity .15s;
+  white-space: nowrap;
+}
+.downloadBtn:hover { opacity: .85; }
+
+/* ── Back link ── */
+.back { margin-top: 48px; padding-top: 32px; border-top: 0.5px solid var(--border); }
 .backLink {
   font-family: var(--font-body);
   font-size: 13px;
   color: var(--muted);
   transition: color .15s;
+  text-decoration: none;
 }
 .backLink:hover { color: var(--pink); }
 
 @media (max-width: 680px) {
   .article { padding: 40px 20px 60px; }
+  .downloadInner { flex-direction: column; align-items: flex-start; }
 }

@@ -4,6 +4,8 @@ date: "2026-05-15"
 excerpt: "How a fictional pillow companny solved a very real learning problem"
 tags: ["Design","Compliance","Training","Learning","Corporate"]
 readTime: 7
+downloadUrl: "/posts/snoresville/snoresville-guide.pdf"
+downloadLabel: "Download the Snoresville case study"
 ---
 # How Snoresville Pillow & Co. Woke Up Its Compliance Training 
 
