@@ -9,7 +9,7 @@ readTime: 7
 
 ### (How a fictional pillow company solved a very real learning problem)
 
-![A cluttered layout](/posts/snoreville/sv-header.png)
+![A cluttered layout](/static/images/sv-header.png)
 
 Let’s be honest: compliance training doesn’t exactly have a reputation for being exciting.
 
