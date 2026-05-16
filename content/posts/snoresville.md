@@ -9,7 +9,7 @@ readTime: 7
 
 ### (How a fictional pillow company solved a very real learning problem)
 
-![A cluttered layout](/static/images/sv-header.png)
+![snoresville header](/static/images/sv-header.png)
 
 Let’s be honest: compliance training doesn’t exactly have a reputation for being exciting.
 
@@ -25,6 +25,8 @@ At Snoresville Pillow & Co., sleep was the product—but boredom was the culture
 
 This once-promising pillow manufacturer made everything from luxury memory foam pillows to “nap pods for executives.” But behind the scenes, the real nightmare wasn’t production delays or supply chain issues.
 
+![snoresville problems](/static/images/sv-intro.png)
+
 It was compliance training.
 
 Low retention meant employees forgot procedures because the information was passive, overloaded, and forgettable. New hires completed training but still didn’t feel confident doing the job.
@@ -38,9 +40,14 @@ Here’s how.
 
 ### 1. They Turned Policies Into Stories People Actually Wanted to Follow
 
+![snoresville part 1](/static/images/sv-pillow-tag.png)
+
 Instead of forcing employees through rule-heavy slides, Snoresville built fictional scenarios like The Great Pillow Tag Crisis, where Gary Goosefeather discovered thousands of mislabeled pillows before a shipment. Learners had to decide what Gary should do next, see the consequences of their choices, and practice decision-making without causing real-world chaos. Funny enough, stories kept attention far better than page 47 of the handbook ever did.
 
 ### 2. They Used Humor Without Losing the Message
+
+![snoresville part 2](/static/images/sv-humor.png)
+
 Snoresville realized serious topics don’t need serious delivery. They added playful moments like a forklift named Sir Lifts-a-Lot, fake headlines about pillow avalanches, and surprise appearances from Stanley Snooze whenever mistakes got expensive. The humor made people pay attention—but the lessons still landed.
 
 ### 3. They Stopped Holding Learners Hostage for Three Hours
