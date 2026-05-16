@@ -28,7 +28,7 @@ export default function About() {
           </p>
           <p>
             If you want to follow along, <a href="/subscribe">subscribe to my newsletter</a>.
-            I send email sparingly — no fluff, just ideas worth your time.
+            I send emails sparingly — no fluff, just ideas worth your time.
           </p>
 
           <h2>Get in touch</h2>
