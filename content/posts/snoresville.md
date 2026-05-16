@@ -1,11 +1,10 @@
 ---
-title: "How Snoresville Pillow & Co. Woke Up Its Compliance Training "
+title: "How Snoresville Pillow & Co. Woke Up Its Compliance Training"
 date: "2026-05-15"
-excerpt: "Your excerpt"
-tags: ["Design","Compliance","Training",]
+excerpt: "How a fictional pillow companny solved a very real learning problem"
+tags: ["Design","Compliance","Training","Learning","Corporate"]
 readTime: 7
 ---
-
 # How Snoresville Pillow & Co. Woke Up Its Compliance Training 
 
 ### (How a fictional pillow company solved a very real learning problem)
