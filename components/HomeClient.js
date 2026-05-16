@@ -50,7 +50,7 @@ export default function HomeClient({ posts, latest }) {
           <h1 className={styles.heroHeadline}>
             DESIGN.<br />
             <span className={styles.pink}>LEARN.</span><br />
-            <span className={styles.outline}>MAKE.</span>
+            <span className={styles.outline}>CREATE.</span>
           </h1>
 
           <p className={styles.heroSub}>
@@ -69,7 +69,7 @@ export default function HomeClient({ posts, latest }) {
         <div className={styles.heroMark} aria-hidden="true">
           <div id="pill1" className={styles.pillLg} style={{ background: 'var(--pink)', width: 180 }}>DESIGN</div>
           <div id="pill2" className={styles.pillLg} style={{ background: 'var(--mint)', color: 'var(--ink)', width: 116, marginLeft: 24 }}>LEARN</div>
-          <div id="pill3" className={styles.pillLg} style={{ background: 'var(--ink)', width: 150, marginLeft: 10 }}>MAKE</div>
+          <div id="pill3" className={styles.pillLg} style={{ background: 'var(--ink)', width: 150, marginLeft: 10 }}>CREATE</div>
         </div>
       </section>
 
