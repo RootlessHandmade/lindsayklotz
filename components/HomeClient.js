@@ -74,7 +74,7 @@ export default function HomeClient({ posts, latest }) {
       {/* ── Topic strip ── */}
       <div className={styles.topicStrip}>
         <span className={styles.topicLabel}>Explore →</span>
-        {['Typography','Color theory','Design systems','Creative process','Visual thinking','Innovation'].map((t) => (
+        {['Design', 'Learning', 'Innovation', 'Compliance', 'Training', 'AI'].map((t) => (
           <a key={t} href={`/blog?tag=${t.toLowerCase()}`} className={styles.topicTag}>{t}</a>
         ))}
       </div>

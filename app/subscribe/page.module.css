@@ -1,0 +1,105 @@
+.main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 60px 40px 80px;
+  }
+  
+  /* ── Hero ── */
+  .hero {
+    margin-bottom: 48px;
+  }
+  
+  .pillRow {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 28px;
+  }
+  
+  .pill {
+    height: 14px;
+    border-radius: 999px;
+  }
+  
+  .title {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 800;
+    color: var(--ink);
+    letter-spacing: -.03em;
+    line-height: 1;
+    margin-bottom: 18px;
+  }
+  
+  .sub {
+    font-family: var(--font-body);
+    font-size: 16px;
+    color: #666;
+    line-height: 1.8;
+    max-width: 520px;
+  }
+  
+  /* ── Kit form box ── */
+  .formBox {
+    background: var(--paper);
+    border-radius: 16px;
+    padding: 36px;
+    margin-bottom: 56px;
+    border: 0.5px solid var(--border);
+  }
+  
+  /* ── What to expect ── */
+  .expect {
+    border-top: 0.5px solid var(--border);
+    padding-top: 48px;
+  }
+  
+  .expectTitle {
+    font-family: var(--font-display);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 24px;
+  }
+  
+  .expectGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .expectCard {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  
+  .expectDot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+  
+  .expectName {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  
+  .expectDesc {
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  
+  @media (max-width: 680px) {
+    .main { padding: 40px 20px 60px; }
+    .formBox { padding: 24px 20px; }
+  }
