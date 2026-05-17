@@ -7,8 +7,6 @@ readTime: 10
 downloadUrl: "/posts/snoresville/snoresville-guide.pdf"
 downloadLabel: "Download the Snoresville case study"
 ---
-![snoresville header](/static/images/sv-header.png)
-
 Let’s be honest: compliance training doesn’t exactly have a reputation for being exciting.
 
 When compliance training is long, dull, or disconnected from day-to-day work, people forget what matters. Mistakes happen. Confidence dips. Managers play cleanup crew. New hires lose patience. It often becomes something employees complete—not something they remember—allowing companies to check the box while missing the point entirely.
@@ -17,7 +15,10 @@ The issue usually isn’t the topic. It’s the delivery. Even important subject
 
 So what happens when a company finally decides enough is enough?
 Let’s head to a place where the pillows are soft, the mistakes are costly, and the training could lull espresso to sleep.
-Welcome to Snoresville Pillow & Co…
+
+### Welcome to Snoresville Pillow & Co…
+
+![snoresville header](/static/images/sv-header.png)
  
 At Snoresville Pillow & Co., sleep was the product—but boredom was the culture.
 
