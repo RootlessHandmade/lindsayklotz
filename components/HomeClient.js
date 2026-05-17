@@ -9,33 +9,48 @@ export default function HomeClient({ posts, latest }) {
     const pill1 = document.getElementById('pill1');
     const pill2 = document.getElementById('pill2');
     const pill3 = document.getElementById('pill3');
-  
+
+    if (!pill1 || !pill2 || !pill3) return;
+
     let mouseX = 0, mouseY = 0;
     let time = 0;
-  
-    // Each pill has its own position and velocity
+
+    const BOUNCE   = 0.7;
+    const FRICTION = 0.88;
+    const SPRING   = 0.07;
+
+    // Pills: position offset from their natural layout position
     const pills = [
-      { el: pill1, x: 0, y: 0, vx: 0, vy: 0, baseX: 0,   baseY: 0   },
-      { el: pill2, x: 0, y: 0, vx: 0, vy: 0, baseX: 24,  baseY: 62  },
-      { el: pill3, x: 0, y: 0, vx: 0, vy: 0, baseX: 10,  baseY: 124 },
+      { el: pill1, x: 0, y: 0, vx: 0, vy: 0, w: 180, h: 52 },
+      { el: pill2, x: 0, y: 0, vx: 0, vy: 0, w: 116, h: 52 },
+      { el: pill3, x: 0, y: 0, vx: 0, vy: 0, w: 150, h: 52 },
     ];
-  
+
+    // Store natural (un-transformed) positions once
+    let bases = null;
+
+    const getBases = () => {
+      // Temporarily reset transforms to get natural positions
+      pills.forEach(p => { p.el.style.transform = 'none'; });
+      bases = pills.map(p => {
+        const r = p.el.getBoundingClientRect();
+        return { left: r.left, top: r.top };
+      });
+    };
+
     const handleMouseMove = (e) => {
       mouseX = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
       mouseY = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
     };
-  
+
     window.addEventListener('mousemove', handleMouseMove);
-  
-    const PILL_W = 180;
-    const PILL_H = 52;
-    const BOUNCE = 0.6;
-    const FRICTION = 0.85;
-  
+
     const animate = () => {
+      if (!bases) { getBases(); }
+
       time += 0.012;
-  
-      // Target positions from mouse + ambient float
+
+      // Target offsets for each pill
       const targets = [
         {
           x: mouseX * 60 + Math.sin(time * 1.1) * 30,
@@ -50,64 +65,74 @@ export default function HomeClient({ posts, latest }) {
           y: mouseY * -15 + Math.sin(time * 1.3 + 2) * 45,
         },
       ];
-  
-      // Spring each pill toward its target
+
+      // Spring toward target
       pills.forEach((p, i) => {
-        const tx = targets[i].x;
-        const ty = targets[i].y;
-        p.vx += (tx - p.x) * 0.08;
-        p.vy += (ty - p.y) * 0.08;
+        p.vx += (targets[i].x - p.x) * SPRING;
+        p.vy += (targets[i].y - p.y) * SPRING;
         p.vx *= FRICTION;
         p.vy *= FRICTION;
-        p.x += p.vx;
-        p.y += p.vy;
+        p.x  += p.vx;
+        p.y  += p.vy;
       });
-  
-      // Collision detection between each pair
-      for (let i = 0; i < pills.length; i++) {
-        for (let j = i + 1; j < pills.length; j++) {
-          const a = pills[i];
-          const b = pills[j];
-  
-          // Get real screen positions
-          const ax = a.baseX + a.x;
-          const ay = a.baseY + a.y;
-          const bx = b.baseX + b.x;
-          const by = b.baseY + b.y;
-  
-          const dx = bx - ax;
-          const dy = by - ay;
-          const overlapX = PILL_W - Math.abs(dx);
-          const overlapY = PILL_H - Math.abs(dy);
-  
-          if (overlapX > 0 && overlapY > 0) {
-            // Resolve on the smaller overlap axis
-            if (overlapX < overlapY) {
-              const push = (overlapX / 2) * (dx > 0 ? 1 : -1);
-              a.vx -= push * BOUNCE;
-              b.vx += push * BOUNCE;
-            } else {
-              const push = (overlapY / 2) * (dy > 0 ? 1 : -1);
-              a.vy -= push * BOUNCE;
-              b.vy += push * BOUNCE;
+
+      // Collision resolution — run 3 iterations for stability
+      for (let iter = 0; iter < 3; iter++) {
+        for (let i = 0; i < pills.length; i++) {
+          for (let j = i + 1; j < pills.length; j++) {
+            const a = pills[i];
+            const b = pills[j];
+
+            // Actual screen rects after current offsets
+            const aLeft  = bases[i].left + a.x;
+            const aTop   = bases[i].top  + a.y;
+            const aRight = aLeft + a.w;
+            const aBot   = aTop  + a.h;
+
+            const bLeft  = bases[j].left + b.x;
+            const bTop   = bases[j].top  + b.y;
+            const bRight = bLeft + b.w;
+            const bBot   = bTop  + b.h;
+
+            const overlapX = Math.min(aRight, bRight) - Math.max(aLeft, bLeft);
+            const overlapY = Math.min(aBot,   bBot)   - Math.max(aTop,  bTop);
+
+            if (overlapX > 0 && overlapY > 0) {
+              // Push apart on the smallest overlap axis
+              if (overlapX <= overlapY) {
+                const push = overlapX / 2;
+                const dir  = aLeft < bLeft ? -1 : 1;
+                a.x += dir * push;
+                b.x -= dir * push;
+                // Transfer velocity
+                const avgVx = (a.vx + b.vx) / 2;
+                a.vx = avgVx * -BOUNCE;
+                b.vx = avgVx *  BOUNCE;
+              } else {
+                const push = overlapY / 2;
+                const dir  = aTop < bTop ? -1 : 1;
+                a.y += dir * push;
+                b.y -= dir * push;
+                const avgVy = (a.vy + b.vy) / 2;
+                a.vy = avgVy * -BOUNCE;
+                b.vy = avgVy *  BOUNCE;
+              }
             }
           }
         }
       }
-  
+
       // Apply transforms
       pills.forEach((p, i) => {
         const tilt = mouseX * [12, -10, 14][i];
-        if (p.el) {
-          p.el.style.transform = `translate(${p.x}px, ${p.y}px) rotateY(${tilt}deg)`;
-        }
+        p.el.style.transform = `translate(${p.x}px, ${p.y}px) rotateY(${tilt}deg)`;
       });
-  
+
       rafId = requestAnimationFrame(animate);
     };
-  
+
     let rafId = requestAnimationFrame(animate);
-  
+
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       cancelAnimationFrame(rafId);
