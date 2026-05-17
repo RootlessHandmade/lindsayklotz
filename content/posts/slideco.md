@@ -66,8 +66,11 @@ Instead of asking AI to build courses, Zara asked:
 “What if training helped people do their jobs?”
 
 First, she replaced passive slides with **realistic decisions.**
+
     •	Managers practiced difficult conversations.
+
     •	Warehouse leads handled safety incidents.
+    
     •	Customer service reps navigated upset callers.
 
 People made choices. They saw outcomes. They learned by doing.
@@ -75,8 +78,11 @@ People made choices. They saw outcomes. They learned by doing.
 Then she added **instant support.** 
 
 An AI chatbot was available whenever employees needed help:
+
     •	How do I give better feedback?
+
     •	What does this policy actually mean?
+
     •	How should I respond in this situation?
 
 No waiting for the next assigned module. No digging through PDFs.
@@ -84,7 +90,9 @@ No waiting for the next assigned module. No digging through PDFs.
 Just useful answers in the moment of need.
 
 Finally, she **personalized the experience.**
+
     •	Struggling learners received refreshers. 
+
     •	High performers moved ahead.
 
 For the first time, training adjusted to people instead of forcing people to adjust to training.
@@ -116,9 +124,13 @@ They are resisting **bad learning.**
 ![slideco](/static/images/slideco/sc-seven.png)
 
 **It will replace:**
+
     •	Click-next courses
+
     •  	One-size-fits-all training
+
     •	Quiz factories
+
     •	Content built for reports instead of results
 
 In short, AI won’t replace eLearning designers…but it will replace bad eLearning.
