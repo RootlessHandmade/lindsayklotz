@@ -26,9 +26,9 @@ Your quest begins.
 
 You step into a vast stone corridor lit by flickering torches and suspiciously bright progress bars. Two doors stand before you. Choose carefully.
 
-Door A: Company History – 67 Slides
+**Door A:** Company History – 67 Slides
 
-Door B: Meet Mara, a new employee facing her first difficult customer
+**Door B:** Meet Mara, a new employee facing her first difficult customer
 
 #### If You Choose Door A
 
@@ -59,69 +59,79 @@ Suddenly, you care what happens next.
 
 Mara gestures for you to follow. Together, you leave the marketplace and arrive at a rope bridge swaying high above the Ravine of Bad Reviews.
 
-Chapter Two: The Bridge of Decisions
+### Chapter Two: The Bridge of Decisions
 
-
+![clickmore two](/static/images/clickmore/cm-two.png)
 
 Choose your response:
-A) Refund immediately
-B) Ask questions first
-C) Tell them to email support
+**A)** Refund immediately
+**B)** Ask questions first
+**C)** Tell them to email support
  
-If You Choose A
+#### If You Choose A
 
-
+![clickmore two](/static/images/clickmore/cm-two-a.png)
 
 The customer smiles—until three villagers appear holding unrelated receipts. By sunset, the kingdom has refunded six goat purchases and a canoe. Treasury is furious.
 
-If You Choose B
+#### If You Choose B
 
-
+![clickmore two](/static/images/clickmore/cm-two-b.png)
 
 You learn the package was delayed, not damaged. A tracking update and sincere apology solve everything. The customer relaxes. Mara whispers, “That worked better than panic.”
 
-If You Choose C
+#### If You Choose C
 
-
+![clickmore two](/static/images/clickmore/cm-two-c.png)
 
 The customer says nothing, then writes a one-star review so powerful it cracks nearby stone. A raven arrives carrying a complaint marked URGENT.
 
 With the matter settled—more or less—you and Mara continue into the woods beyond the bridge.
-Chapter Three: The Splitwood Forest
+
+### Chapter Three: The Splitwood Forest
+
+![clickmore three](/static/images/clickmore/cm-three.png)
 
 The trees rise tall around you as the path divides in two. Mara must prepare for tomorrow’s customer interactions. Choose wisely.
 
-Left Path: Read the policy guide
-Right Path: Practice realistic scenarios
+**Left Path:** Read the policy guide
+**Right Path:** Practice realistic scenarios
 
-If You Choose Left
+#### If You Choose Left
 
-
+![clickmore three](/static/images/clickmore/cm-three-l.png)
 
 You study policies for hours. Terms feel familiar. Definitions seem clear.
 Then a real customer asks an unexpected question, and your confidence evaporates like mist.
 
-If You Choose Right
+#### If You Choose Right
 
-
+![clickmore three](/static/images/clickmore/cm-three-r.png)
 
 You practice five realistic conversations. You make mistakes safely, adjust your responses, and improve each round.
 
 The next day, Mara handles a difficult customer calmly and skillfully.
 
 A narrow trail leads you both to the heart of the keep, where one final chamber waits.
-Final Chapter: The Mirror of Design
+
+### Final Chapter: The Mirror of Design
+
+![clickmore four](/static/images/clickmore/cm-four.png)
 
 You descend into a quiet chamber where an ancient mirror asks one final question:
 What was the true curse of Clickmore Keep?
-A) People dislike learning
-B) Employees lack attention spans
-C) The training was poorly designed
+**A)** People dislike learning
+**B)** Employees lack attention spans
+**C)** The training was poorly designed
 
-If you choose A or B, the mirror buzzes politely.
-“Common myth. Try again.”
+#### If you choose A or B
+The mirror buzzes politely, “Common myth. Try again.”
 
-If you choose C, the chamber fills with light. The walls crack. Unread PDFs drift harmlessly into the wind. Progress bars shatter. Somewhere above, the looping corporate music finally stops.
+#### If you choose C 
+
+![clickmore four](/static/images/clickmore/cm-four-c.png)
+
+The chamber fills with light. The walls crack. Unread PDFs drift harmlessly into the wind. Progress bars shatter. Somewhere above, the looping corporate music finally stops.
 Villagers cheer.
 
 Mara smiles, looking far calmer than when you first met her, “So people were ready to learn all along?”
@@ -130,9 +140,9 @@ You nod.
 
 “They always were. They just needed something worth engaging with.”
 
-The Treasure You Carry Home
+### The Treasure You Carry Home
 
-
+![clickmore treasure](/static/images/clickmore/cm-treasure.png)
 
 People remember stories because stories give information meaning.
 
@@ -146,20 +156,25 @@ They remember consequences because outcomes make lessons real.
 
 Better results rarely require better learners—only better designed journeys.
 
+### Your Final Choice
 
-Your Final Choice
-
-
+![clickmore final](/static/images/clickmore/cm-final.png)
 
 You return to your own kingdom, where a blank course shell glows on the screen before you. Nearby, an old template waits patiently, humming with the familiar power of the Next button.
 
 One final decision remains:
-A) Create another information dump
-B) Build an experience people remember
+**A)** Create another information dump
+**B)** Build an experience people remember
 
-Replay Value
+### Replay Value
 
-
+![clickmore replay](/static/images/clickmore/cm-replay.png)
 
 If you’d like better outcomes, start again and choose differently.
 That’s how learning works.
+
+![clickmore guide](/static/images/clickmore/cm-guide.png)
+
+<a href="/posts/clickmore/clickmore-guide.pdf" download className="btn-primary">
+  Download the full guide →
+</a>
