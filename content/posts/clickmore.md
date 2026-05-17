@@ -64,8 +64,11 @@ Mara gestures for you to follow. Together, you leave the marketplace and arrive 
 ![clickmore two](/static/images/clickmore/cm-two.png)
 
 Choose your response:
+
 **A)** Refund immediately
+
 **B)** Ask questions first
+
 **C)** Tell them to email support
  
 #### If You Choose A
@@ -95,6 +98,7 @@ With the matter settled—more or less—you and Mara continue into the woods be
 The trees rise tall around you as the path divides in two. Mara must prepare for tomorrow’s customer interactions. Choose wisely.
 
 **Left Path:** Read the policy guide
+
 **Right Path:** Practice realistic scenarios
 
 #### If You Choose Left
@@ -120,11 +124,15 @@ A narrow trail leads you both to the heart of the keep, where one final chamber 
 
 You descend into a quiet chamber where an ancient mirror asks one final question:
 What was the true curse of Clickmore Keep?
+
 **A)** People dislike learning
+
 **B)** Employees lack attention spans
+
 **C)** The training was poorly designed
 
 #### If you choose A or B
+
 The mirror buzzes politely, “Common myth. Try again.”
 
 #### If you choose C 
@@ -163,12 +171,12 @@ Better results rarely require better learners—only better designed journeys.
 You return to your own kingdom, where a blank course shell glows on the screen before you. Nearby, an old template waits patiently, humming with the familiar power of the Next button.
 
 One final decision remains:
+
 **A)** Create another information dump
+
 **B)** Build an experience people remember
 
 ### Replay Value
-
-![clickmore replay](/static/images/clickmore/cm-replay.png)
 
 If you’d like better outcomes, start again and choose differently.
 That’s how learning works.
