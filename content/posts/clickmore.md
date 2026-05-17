@@ -133,6 +133,7 @@ What was the true curse of Clickmore Keep?
 
 #### If you choose A or B
 
+
 The mirror buzzes politely, “Common myth. Try again.”
 
 #### If you choose C 
