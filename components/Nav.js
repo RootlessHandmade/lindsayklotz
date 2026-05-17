@@ -18,11 +18,9 @@ export default function Nav() {
       </Link>
 
       <div className={`${styles.links} ${open ? styles.open : ''}`}>
-        <Link href="/blog?tag=design"   className={styles.link}>Design</Link>
-        <Link href="/blog?tag=learning" className={styles.link}>Learning</Link>
-        <Link href="/blog?tag=innovation" className={styles.link}>Innovation</Link>
-        <Link href="/about"             className={styles.link}>About</Link>
-        <Link href="/subscribe"         className={styles.subscribe}>Subscribe</Link>
+      <Link href="/blog"    className={styles.link}>Blog</Link>
+      <Link href="/about"   className={styles.link}>About</Link>
+      <Link href="/subscribe" className={styles.link}>Subscribe</Link>
       </div>
 
       <button
