@@ -25,24 +25,29 @@ Your quest begins.
 ![clickmore header](/static/images/clickmore/cm-one.png)
 
 You step into a vast stone corridor lit by flickering torches and suspiciously bright progress bars. Two doors stand before you. Choose carefully.
+
 Door A: Company History – 67 Slides
+
 Door B: Meet Mara, a new employee facing her first difficult customer
 
-If You Choose Door A
+#### If You Choose Door A
 
-
+![clickmore one](/static/images/clickmore/cm-one-a.png)
 
 You enter a dim chamber where every wall is covered in bullet points while a weary voice reads each one aloud.
+
 “Founded in 1987…”
+
 “Expanded regionally in 1994…”
+
 “Rebranded in 2003…”
 
 Minutes crawl by. By Slide 19, your spirit briefly leaves your body. By Slide 42, even the narrator sounds exhausted. In the corner, a skeleton still waits patiently for module completion.
 You emerge forty-seven minutes later remembering only that time is precious.
 
-If You Choose Door B
+#### If You Choose Door B
 
-
+![clickmore one](/static/images/clickmore/cm-one-b.png)
 
 You step into a bustling marketplace where a young employee named Mara stands behind a counter, visibly panicked. An angry customer slams down a damaged package.
 
