@@ -1,3 +1,4 @@
+import Script from 'next/script';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
 import styles from './page.module.css';
@@ -30,18 +31,23 @@ export default function Subscribe() {
 
         {/* ── Kit form ── */}
         <div className={styles.formBox}>
-          <script async data-uid="eaa7969e7a" src="https://lindsay-klotz.kit.com/eaa7969e7a/index.js"></script>
+          <div data-uid="eaa7969e7a" />
+          <Script
+            src="https://lindsay-klotz.kit.com/eaa7969e7a/index.js"
+            data-uid="eaa7969e7a"
+            strategy="afterInteractive"
+          />
         </div>
 
         {/* ── What to expect ── */}
         <div className={styles.expect}>
-          <h2 className={styles.expectTitle}>What you'll get</h2>
+          <h2 className={styles.expectTitle}>What you&apos;ll get</h2>
           <div className={styles.expectGrid}>
             <div className={styles.expectCard}>
               <div className={styles.expectDot} style={{ background: 'var(--pink)' }} />
               <div>
                 <p className={styles.expectName}>Design breakdowns</p>
-                <p className={styles.expectDesc}>Real examples of what works, what doesn't, and why.</p>
+                <p className={styles.expectDesc}>Real examples of what works, what doesn&apos;t, and why.</p>
               </div>
             </div>
             <div className={styles.expectCard}>
