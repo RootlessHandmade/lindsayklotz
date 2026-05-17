@@ -4,7 +4,7 @@ date: "2026-04-15"
 excerpt: "A Choose-Your-Own-Adventure Tale About Why Better Learning Requires Better Choices"
 tags: ["Design","Compliance","Training","Learning","Corporate"]
 readTime: 10
-downloadUrl: "/posts/clickmore/snoresville-guide.pdf"
+downloadUrl: "/posts/clickmore/clickmore-guide.pdf"
 downloadLabel: "Download the Clickmore Keep case study"
 ---
 ![clickmore header](/static/images/clickmore/cm-header.png)
