@@ -20,7 +20,7 @@ export default function Nav() {
       <div className={`${styles.links} ${open ? styles.open : ''}`}>
       <Link href="/blog"    className={styles.link}>Blog</Link>
       <Link href="/about"   className={styles.link}>About</Link>
-      <Link href="/subscribe" className={styles.link}>Subscribe</Link>
+      <Link href="/subscribe" className={styles.subscribe}>Subscribe</Link>
       </div>
 
       <button
