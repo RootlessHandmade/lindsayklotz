@@ -1,4 +1,5 @@
 import './globals.css';
+import CursorEffect from '../components/CursorEffect';
 
 export const metadata = {
   title: 'Lindsay Klotz — Design · Learning · Innovation',
@@ -14,7 +15,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <CursorEffect />
+        {children}
+      </body>
     </html>
   );
 }
