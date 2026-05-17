@@ -43,15 +43,15 @@ export default function CursorEffect() {
           const speed = 1 + Math.random() * 3;
           this.vx = Math.cos(angle) * speed;
           this.vy = Math.sin(angle) * speed;
-          this.r  = 3 + Math.random() * 4;
-          this.life = 1;
-          this.decay = 0.015 + Math.random() * 0.015;
+          this.r  = 2 + Math.random() * 2;
+          this.life = 0.8;
+          this.decay = 0.02 + Math.random() * 0.02;
         } else {
           this.vx = (Math.random() - 0.5) * 1.5;
           this.vy = (Math.random() - 0.5) * 1.5 - 0.5;
-          this.r  = 2 + Math.random() * 3;
-          this.life = 1;
-          this.decay = 0.04 + Math.random() * 0.04;
+          this.r  = 1 + Math.random() * 3;
+          this.life = 0.7;
+          this.decay = 0.05 + Math.random() * 0.04;
         }
       }
 
@@ -68,7 +68,7 @@ export default function CursorEffect() {
         ctx.globalAlpha = Math.max(0, this.life);
         ctx.fillStyle = this.color;
         ctx.shadowColor = this.color;
-        ctx.shadowBlur = 8;
+        ctx.shadowBlur = 4;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
         ctx.fill();
@@ -80,7 +80,7 @@ export default function CursorEffect() {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
 
-      if (Math.random() < 0.4) {
+      if (Math.random() < 0.2) {
         particles.push(new Particle(
           mouse.x + (Math.random() - 0.5) * 8,
           mouse.y + (Math.random() - 0.5) * 8,
@@ -92,7 +92,7 @@ export default function CursorEffect() {
     const handleClick = (e) => {
       clickX = e.clientX;
       clickY = e.clientY;
-      for (let i = 0; i < 12; i++) {
+      for (let i = 0; i < 7; i++) {
         particles.push(new Particle(e.clientX, e.clientY, 'burst'));
       }
       ringPulse = 1;
