@@ -1,14 +1,29 @@
-import Script from 'next/script';
+'use client';
+import { useEffect, useRef } from 'react';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
 import styles from './page.module.css';
 
-export const metadata = {
-  title: 'Subscribe — Lindsay Klotz',
-  description: 'Get ideas about graphic design, learning, and innovation delivered to your inbox.',
-};
-
 export default function Subscribe() {
+  const formRef = useRef(null);
+
+  useEffect(() => {
+    if (!formRef.current) return;
+
+    // Load the Kit CK script only on this page
+    const script = document.createElement('script');
+    script.src = 'https://f.convertkit.com/ckjs/ck.5.js';
+    script.async = true;
+    formRef.current.appendChild(script);
+
+    return () => {
+      // Clean up script when leaving the page
+      if (formRef.current && script.parentNode === formRef.current) {
+        formRef.current.removeChild(script);
+      }
+    };
+  }, []);
+
   return (
     <>
       <Nav />
@@ -30,13 +45,79 @@ export default function Subscribe() {
         </div>
 
         {/* ── Kit form ── */}
-        <div className={styles.formBox}>
-          <div data-uid="eaa7969e7a" id="kit-form-target" />
-          <Script
-            src="https://lindsay-klotz.kit.com/eaa7969e7a/index.js"
+        <div className={styles.formBox} ref={formRef}>
+          <form
+            action="https://app.kit.com/forms/9453759/subscriptions"
+            className="seva-form formkit-form"
+            method="post"
+            data-sv-form="9453759"
             data-uid="eaa7969e7a"
-            strategy="lazyOnload"
-          />
+            data-format="inline"
+            data-version="5"
+            style={{ maxWidth: '100%' }}
+          >
+            <div data-style="clean">
+              <ul
+                className="formkit-alert formkit-alert-error"
+                data-element="errors"
+                data-group="alert"
+              />
+              <div
+                data-element="fields"
+                data-stacked="false"
+                className="seva-fields formkit-fields"
+                style={{ display: 'flex', gap: 10 }}
+              >
+                <div className="formkit-field" style={{ flex: 1 }}>
+                  <input
+                    className="formkit-input"
+                    name="email_address"
+                    aria-label="Email Address"
+                    placeholder="Email Address"
+                    required
+                    type="email"
+                    style={{
+                      width: '100%',
+                      padding: '12px 16px',
+                      border: '1.5px solid var(--border)',
+                      borderRadius: 8,
+                      fontSize: 14,
+                      fontFamily: 'var(--font-body)',
+                      color: 'var(--ink)',
+                      outline: 'none',
+                    }}
+                  />
+                </div>
+                <button
+                  data-element="submit"
+                  className="formkit-submit"
+                  style={{
+                    background: 'var(--pink)',
+                    color: '#fff',
+                    border: 'none',
+                    borderRadius: 8,
+                    padding: '12px 24px',
+                    fontFamily: 'var(--font-display)',
+                    fontWeight: 800,
+                    fontSize: 13,
+                    letterSpacing: '.02em',
+                    cursor: 'pointer',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  <span>Subscribe</span>
+                </button>
+              </div>
+              <p style={{
+                fontSize: 11,
+                color: 'var(--muted)',
+                marginTop: 12,
+                fontFamily: 'var(--font-body)',
+              }}>
+                No spam. Unsubscribe anytime.
+              </p>
+            </div>
+          </form>
         </div>
 
         {/* ── What to expect ── */}
