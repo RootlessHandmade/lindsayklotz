@@ -131,8 +131,9 @@ What was the true curse of Clickmore Keep?
 
 **C)** The training was poorly designed
 
-#### If you choose A or B
+#### If you choose A or B 
 
+![clickmore four](/static/images/clickmore/cm-four-ab.png)
 
 The mirror buzzes politely, “Common myth. Try again.”
 
