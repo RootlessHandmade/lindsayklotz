@@ -111,7 +111,7 @@ Because people are not resisting learning.
 
 They are resisting **bad learning.**
  
-#### What AI Will Replace
+### What AI Will Replace
 
 ![slideco](/static/images/slideco/sc-seven.png)
 
