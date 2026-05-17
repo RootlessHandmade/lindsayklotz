@@ -32,17 +32,17 @@ export default function HomeClient({ posts, latest }) {
       const tilt3 = Math.cos(time * 0.7 + 2) * 5;
   
       if (pill1) pill1.style.transform = `
-        translate(${mouseX * 18}px, ${mouseY * 10 + float1}px)
-        rotateY(${mouseX * 8 + tilt1}deg)
-      `;
-      if (pill2) pill2.style.transform = `
-        translate(${mouseX * -12}px, ${mouseY * 14 + float2}px)
-        rotateY(${mouseX * -6 + tilt2}deg)
-      `;
-      if (pill3) pill3.style.transform = `
-        translate(${mouseX * 20}px, ${mouseY * -8 + float3}px)
-        rotateY(${mouseX * 10 + tilt3}deg)
-      `;
+  translate(${mouseX * 60 + Math.sin(time * 1.1) * 30}px, ${mouseY * 10 + Math.sin(time * 1.1) * 8}px)
+  rotateY(${mouseX * 12 + Math.cos(time * 0.9) * 4}deg)
+`;
+if (pill2) pill2.style.transform = `
+  translate(${mouseX * -50 + Math.sin(time * 0.8 + 1) * 25}px, ${mouseY * 14 + Math.sin(time * 0.8 + 1) * 6}px)
+  rotateY(${mouseX * -10 + Math.cos(time * 1.2 + 1) * 3}deg)
+`;
+if (pill3) pill3.style.transform = `
+  translate(${mouseX * 70 + Math.sin(time * 1.3 + 2) * 35}px, ${mouseY * -8 + Math.sin(time * 1.3 + 2) * 7}px)
+  rotateY(${mouseX * 14 + Math.cos(time * 0.7 + 2) * 5}deg)
+`;
   
       rafId = requestAnimationFrame(animate);
     };
