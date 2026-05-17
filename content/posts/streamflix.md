@@ -2,9 +2,9 @@
 title: "The Future of Learning Looks More Like Netflix Than PowerPoint"
 date: "2026-05-01"
 excerpt: "How StreamFlix Industries Turned Training Into Must-Watch Content"
-tags: ["Design","Compliance","Training","Learning","Corporate","Episodic"]
+tags: ["Design","Training","Learning","Episodic"]
 readTime: 10
-downloadUrl: "/posts/streamflix/streamfix-guide.pdf"
+downloadUrl: "/posts/streamflix/streamflix-guide.pdf"
 downloadLabel: "Download the Streamflix case study"
 ---
 ![streamflix header](/static/images/sf-header.png)
@@ -81,7 +81,7 @@ The result:
 - Better recall
 - Less overload
 - More confidence
-- •	Stronger real-world decisions
+- Stronger real-world decisions
 
 ### Episode Five: Every Department Wanted a Spin-Off
 
