@@ -30,9 +30,10 @@ export default function HomeClient({ posts, latest }) {
     const COLORS = ['#FF3CAC', '#4DFFD2', '#0D0D0D'];
     let mouse = { x: W / 2, y: H / 2 };
     let particles = [];
-
-    // Trail dot
     let trail = { x: W / 2, y: H / 2 };
+    let ringPulse = 0;
+    let clickX = W / 2;
+    let clickY = H / 2;
 
     class Particle {
       constructor(x, y, type = 'trail') {
@@ -43,12 +44,12 @@ export default function HomeClient({ posts, latest }) {
 
         if (type === 'burst') {
           const angle = Math.random() * Math.PI * 2;
-          const speed = 2 + Math.random() * 6;
+          const speed = 1 + Math.random() * 3;
           this.vx = Math.cos(angle) * speed;
           this.vy = Math.sin(angle) * speed;
-          this.r  = 4 + Math.random() * 6;
+          this.r  = 3 + Math.random() * 4;
           this.life = 1;
-          this.decay = 0.03 + Math.random() * 0.03;
+          this.decay = 0.015 + Math.random() * 0.015;
         } else {
           this.vx = (Math.random() - 0.5) * 1.5;
           this.vy = (Math.random() - 0.5) * 1.5 - 0.5;
@@ -62,7 +63,7 @@ export default function HomeClient({ posts, latest }) {
         this.x += this.vx;
         this.y += this.vy;
         this.life -= this.decay;
-        if (this.type === 'burst') this.vy += 0.15; // gravity
+        if (this.type === 'burst') this.vy += 0.08;
         this.r *= 0.97;
       }
 
@@ -79,16 +80,10 @@ export default function HomeClient({ posts, latest }) {
       }
     }
 
-    // Cursor ring
-    let ring = { x: W/2, y: H/2, scale: 1, opacity: 0 };
-    let ringPulse = 0;
-
     const handleMouseMove = (e) => {
       mouse.x = e.clientX;
       mouse.y = e.clientY;
-      ring.opacity = 1;
 
-      // Spawn trail particles
       if (Math.random() < 0.4) {
         particles.push(new Particle(
           mouse.x + (Math.random() - 0.5) * 8,
@@ -99,8 +94,9 @@ export default function HomeClient({ posts, latest }) {
     };
 
     const handleClick = (e) => {
-      // Burst of particles on click
-      for (let i = 0; i < 28; i++) {
+      clickX = e.clientX;
+      clickY = e.clientY;
+      for (let i = 0; i < 12; i++) {
         particles.push(new Particle(e.clientX, e.clientY, 'burst'));
       }
       ringPulse = 1;
@@ -113,37 +109,27 @@ export default function HomeClient({ posts, latest }) {
     const animate = () => {
       ctx.clearRect(0, 0, W, H);
 
-      // Smooth trail follow
       trail.x += (mouse.x - trail.x) * 0.15;
       trail.y += (mouse.y - trail.y) * 0.15;
 
-      // Draw cursor ring
-      if (ring.opacity > 0) {
-        const pulse = ringPulse > 0 ? 1 + (1 - ringPulse) * 2 : 1;
+      // Click pulse ring only — expands and fades
+      if (ringPulse > 0) {
+        const progress = 1 - ringPulse;
+        const radius = 10 + progress * 40;
+        const alpha = ringPulse * 0.5;
         ctx.save();
-        ctx.globalAlpha = ring.opacity * 0.6;
+        ctx.globalAlpha = alpha;
         ctx.strokeStyle = '#FF3CAC';
         ctx.lineWidth = 1.5;
         ctx.shadowColor = '#FF3CAC';
-        ctx.shadowBlur = 6;
+        ctx.shadowBlur = 8;
         ctx.beginPath();
-        ctx.arc(trail.x, trail.y, 14 * pulse, 0, Math.PI * 2);
+        ctx.arc(clickX, clickY, radius, 0, Math.PI * 2);
         ctx.stroke();
-
-        // Inner dot
-        ctx.globalAlpha = ring.opacity * 0.9;
-        ctx.fillStyle = '#FF3CAC';
-        ctx.shadowBlur = 10;
-        ctx.beginPath();
-        ctx.arc(trail.x, trail.y, 3, 0, Math.PI * 2);
-        ctx.fill();
         ctx.restore();
-
-        ring.opacity *= 0.98;
-        if (ringPulse > 0) ringPulse -= 0.06;
+        ringPulse -= 0.025;
       }
 
-      // Update + draw particles
       particles = particles.filter(p => p.life > 0);
       particles.forEach(p => { p.update(); p.draw(); });
 
@@ -157,7 +143,7 @@ export default function HomeClient({ posts, latest }) {
       window.removeEventListener('click', handleClick);
       window.removeEventListener('resize', resize);
       cancelAnimationFrame(rafId);
-      document.body.removeChild(canvas);
+      if (document.body.contains(canvas)) document.body.removeChild(canvas);
     };
   }, []);
 
