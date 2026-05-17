@@ -42,7 +42,7 @@ export default function HomeClient({ posts, latest }) {
       <section className={styles.hero}>
         <div className={styles.heroLeft}>
           <div className={styles.heroTags}>
-            <span className="tag tag-pink">Graphic design</span>
+            <span className="tag tag-pink">Design</span>
             <span className="tag tag-dark">Learning</span>
             <span className="tag tag-ghost">Innovation</span>
           </div>
