@@ -7,10 +7,6 @@ readTime: 10
 downloadUrl: "/posts/streamflix/streamfix-guide.pdf"
 downloadLabel: "Download the Streamflix case study"
 ---
-# The Future of Learning Looks More Like Netflix Than PowerPoint 
-
-### (How StreamFlix Industries Turned Training Into Must-Watch Content)
-
 ![streamflix header](/static/images/sf-header.png)
 
 At StreamFlix Industries, corporate training had become white noise. Employees clicked through modules the same way people accept software updates—quickly, reluctantly, and without reading a thing. Completion rates looked fine. Retention was another story.

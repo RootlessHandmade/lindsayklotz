@@ -7,10 +7,6 @@ readTime: 10
 downloadUrl: "/posts/snoresville/snoresville-guide.pdf"
 downloadLabel: "Download the Snoresville case study"
 ---
-# How Snoresville Pillow & Co. Woke Up Its Compliance Training 
-
-### (How a fictional pillow company solved a very real learning problem)
-
 ![snoresville header](/static/images/sv-header.png)
 
 Let’s be honest: compliance training doesn’t exactly have a reputation for being exciting.
