@@ -39,15 +39,15 @@ export default function HomeClient({ posts, latest }) {
       const targets = [
         {
           x: mouseX * 60 + Math.sin(time * 1.1) * 30,
-          y: mouseY * 10 + Math.sin(time * 1.1) * 8,
+          y: mouseY * 20 + Math.sin(time * 1.1) * 40,
         },
         {
           x: mouseX * -50 + Math.sin(time * 0.8 + 1) * 25,
-          y: mouseY * 14 + Math.sin(time * 0.8 + 1) * 6,
+          y: mouseY * 25 + Math.sin(time * 0.8 + 1) * 35,
         },
         {
           x: mouseX * 70 + Math.sin(time * 1.3 + 2) * 35,
-          y: mouseY * -8 + Math.sin(time * 1.3 + 2) * 7,
+          y: mouseY * -15 + Math.sin(time * 1.3 + 2) * 45,
         },
       ];
   
