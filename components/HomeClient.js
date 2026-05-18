@@ -39,9 +39,9 @@ export default function HomeClient({ posts, latest }) {
 
     // Wide triangle — lots of distance between pills
     const TRIANGLE = [
-      { tx: -80, ty: -180 },
-      { tx:  60, ty:   20 },
-      { tx: -80, ty:  200 },
+      { tx:  20, ty: -200 },
+      { tx:  80, ty:    0 },
+      { tx:  20, ty:  200 },
     ];
 
     const params = [

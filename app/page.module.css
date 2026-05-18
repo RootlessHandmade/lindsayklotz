@@ -74,7 +74,7 @@
 .heroMark {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 60px;
   align-items: flex-start;
 }
 
