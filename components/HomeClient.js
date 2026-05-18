@@ -12,7 +12,6 @@ export default function HomeClient({ posts, latest }) {
 
     if (!pill1 || !pill2 || !pill3) return;
 
-    // Create canvas BEHIND the pills
     const canvas = document.createElement('canvas');
     canvas.style.cssText = `
       position: absolute;
@@ -22,7 +21,6 @@ export default function HomeClient({ posts, latest }) {
       z-index: 0;
     `;
 
-    // Make sure pills render above canvas
     [pill1, pill2, pill3].forEach(p => { p.style.position = 'relative'; p.style.zIndex = '1'; });
 
     const heroMark = pill1.parentElement;
@@ -39,17 +37,13 @@ export default function HomeClient({ posts, latest }) {
     let bases = null;
     let heroRect = null;
 
-    // Triangle formation offsets — spread pills far apart in a triangle
-    // pill1 (DESIGN) — top left
-    // pill2 (LEARN)  — bottom center
-    // pill3 (CREATE) — top right
+    // Wide triangle — lots of distance between pills
     const TRIANGLE = [
-      { tx: -100, ty: -70 },
-      { tx:    0, ty:  90 },
-      { tx:  110, ty: -70 },
+      { tx: -180, ty: -130 },
+      { tx:    0, ty:  160 },
+      { tx:  180, ty: -130 },
     ];
 
-    // Gentle float params — very subtle movement
     const params = [
       { ax: 14, ay: 10, px: 0,   py: 0,   spd: 0.5  },
       { ax: 10, ay: 14, px: 1.4, py: 1.0, spd: 0.38 },
@@ -68,15 +62,9 @@ export default function HomeClient({ posts, latest }) {
       heroRect = heroMark.getBoundingClientRect();
       canvas.width  = heroRect.width;
       canvas.height = heroRect.height;
-
-      // Use center of heroMark as anchor, then apply triangle offsets
       const cx = heroRect.width  / 2;
       const cy = heroRect.height / 2;
-
-      bases = TRIANGLE.map((t, i) => ({
-        x: cx + t.tx,
-        y: cy + t.ty,
-      }));
+      bases = TRIANGLE.map((t) => ({ x: cx + t.tx, y: cy + t.ty }));
     };
 
     const handleMouseMove = (e) => {
@@ -97,13 +85,12 @@ export default function HomeClient({ posts, latest }) {
 
       time += 0.007;
 
-      // Compute target float positions
       const raw = params.map((p, i) => ({
         x: bases[i].x + Math.sin(time * p.spd + p.px) * p.ax + mouseX * 10,
         y: bases[i].y + Math.cos(time * p.spd * 0.75 + p.py) * p.ay + mouseY * 6,
       }));
 
-      // Collision separation — push pills apart if they'd overlap
+      // Collision separation
       const pts = raw.map(p => ({ ...p }));
       for (let iter = 0; iter < 4; iter++) {
         for (let i = 0; i < 3; i++) {
@@ -131,16 +118,15 @@ export default function HomeClient({ posts, latest }) {
         }
       }
 
-      // Clear canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw lines FIRST (behind pills)
+      // Draw lines behind pills
       const pairs = [[0,1],[1,2],[0,2]];
       pairs.forEach(([a, b]) => {
         const dx   = pts[a].x - pts[b].x;
         const dy   = pts[a].y - pts[b].y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        const alpha = Math.max(0, 0.3 - dist / 600);
+        const alpha = Math.max(0, 0.35 - dist / 900);
         if (alpha <= 0) return;
 
         ctx.save();
@@ -167,7 +153,7 @@ export default function HomeClient({ posts, latest }) {
         ctx.restore();
       });
 
-      // Apply transforms to pill elements
+      // Apply transforms
       pills.forEach((el, i) => {
         const dx = pts[i].x - bases[i].x;
         const dy = pts[i].y - bases[i].y;
