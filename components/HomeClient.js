@@ -1,12 +1,13 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import PostCard from './PostCard';
 import styles from '../app/page.module.css';
 
 export default function HomeClient({ posts, latest }) {
 
+  const canvasRef = useRef(null);
 
-  // ── Pill animation ──
+  // ── Breathing constellation pill animation ──
   useEffect(() => {
     const pill1 = document.getElementById('pill1');
     const pill2 = document.getElementById('pill2');
@@ -14,120 +15,145 @@ export default function HomeClient({ posts, latest }) {
 
     if (!pill1 || !pill2 || !pill3) return;
 
-    let mouseX = 0, mouseY = 0;
+    // Create canvas overlay for the connecting lines
+    const canvas = document.createElement('canvas');
+    canvas.style.cssText = `
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    `;
+
+    const heroMark = pill1.parentElement;
+    heroMark.style.position = 'relative';
+    heroMark.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+
+    let mouseX = 0.5, mouseY = 0.5;
     let time = 0;
 
-    const BOUNCE   = 0.7;
-    const FRICTION = 0.88;
-    const SPRING   = 0.07;
+    const PINK = '#FF3CAC';
+    const MINT = '#4DFFD2';
 
-    const pills = [
-      { el: pill1, x: 0, y: 0, vx: 0, vy: 0, w: 180, h: 52 },
-      { el: pill2, x: 0, y: 0, vx: 0, vy: 0, w: 116, h: 52 },
-      { el: pill3, x: 0, y: 0, vx: 0, vy: 0, w: 150, h: 52 },
-    ];
-
+    // Natural base offsets for each pill (relative to heroMark)
     let bases = null;
+    let heroRect = null;
 
     const getBases = () => {
-      pills.forEach(p => { p.el.style.transform = 'none'; });
-      bases = pills.map(p => {
-        const r = p.el.getBoundingClientRect();
-        return { left: r.left, top: r.top };
+      pill1.style.transform = 'none';
+      pill2.style.transform = 'none';
+      pill3.style.transform = 'none';
+      heroRect = heroMark.getBoundingClientRect();
+      canvas.width  = heroRect.width;
+      canvas.height = heroRect.height;
+      bases = [pill1, pill2, pill3].map(p => {
+        const r = p.getBoundingClientRect();
+        return {
+          x: r.left - heroRect.left + r.width  / 2,
+          y: r.top  - heroRect.top  + r.height / 2,
+          w: r.width,
+          h: r.height,
+        };
       });
     };
 
     const handleMouseMove = (e) => {
-      mouseX = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
+      mouseX = (e.clientX - window.innerWidth  / 2) / (window.innerWidth  / 2);
       mouseY = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
     };
 
+    const handleResize = () => { bases = null; };
+
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('resize',    handleResize);
+
+    // Pill animation params — very subtle
+    const params = [
+      { ax: 18, ay: 14, px: 0,   py: 0,   spd: 0.55 },
+      { ax: 14, ay: 18, px: 1.3, py: 0.9, spd: 0.40 },
+      { ax: 20, ay: 12, px: 2.5, py: 1.8, spd: 0.65 },
+    ];
+
+    const pills = [pill1, pill2, pill3];
+
+    let rafId;
 
     const animate = () => {
       if (!bases) getBases();
+      if (!bases)  { rafId = requestAnimationFrame(animate); return; }
 
-      time += 0.012;
+      time += 0.008;
 
-      const targets = [
-        {
-          x: mouseX * 60 + Math.sin(time * 1.1) * 30,
-          y: mouseY * 20 + Math.sin(time * 1.1) * 40,
-        },
-        {
-          x: mouseX * -50 + Math.sin(time * 0.8 + 1) * 25,
-          y: mouseY * 25 + Math.sin(time * 0.8 + 1) * 35,
-        },
-        {
-          x: mouseX * 70 + Math.sin(time * 1.3 + 2) * 35,
-          y: mouseY * -15 + Math.sin(time * 1.3 + 2) * 45,
-        },
-      ];
-
-      pills.forEach((p, i) => {
-        p.vx += (targets[i].x - p.x) * SPRING;
-        p.vy += (targets[i].y - p.y) * SPRING;
-        p.vx *= FRICTION;
-        p.vy *= FRICTION;
-        p.x  += p.vx;
-        p.y  += p.vy;
-      });
-
-      for (let iter = 0; iter < 3; iter++) {
-        for (let i = 0; i < pills.length; i++) {
-          for (let j = i + 1; j < pills.length; j++) {
-            const a = pills[i];
-            const b = pills[j];
-
-            const aLeft  = bases[i].left + a.x;
-            const aTop   = bases[i].top  + a.y;
-            const aRight = aLeft + a.w;
-            const aBot   = aTop  + a.h;
-
-            const bLeft  = bases[j].left + b.x;
-            const bTop   = bases[j].top  + b.y;
-            const bRight = bLeft + b.w;
-            const bBot   = bTop  + b.h;
-
-            const overlapX = Math.min(aRight, bRight) - Math.max(aLeft, bLeft);
-            const overlapY = Math.min(aBot,   bBot)   - Math.max(aTop,  bTop);
-
-            if (overlapX > 0 && overlapY > 0) {
-              if (overlapX <= overlapY) {
-                const push = overlapX / 2;
-                const dir  = aLeft < bLeft ? -1 : 1;
-                a.x += dir * push;
-                b.x -= dir * push;
-                const avgVx = (a.vx + b.vx) / 2;
-                a.vx = avgVx * -BOUNCE;
-                b.vx = avgVx *  BOUNCE;
-              } else {
-                const push = overlapY / 2;
-                const dir  = aTop < bTop ? -1 : 1;
-                a.y += dir * push;
-                b.y -= dir * push;
-                const avgVy = (a.vy + b.vy) / 2;
-                a.vy = avgVy * -BOUNCE;
-                b.vy = avgVy *  BOUNCE;
-              }
-            }
-          }
+      // Resize canvas if needed
+      if (heroRect) {
+        const nr = heroMark.getBoundingClientRect();
+        if (nr.width !== heroRect.width || nr.height !== heroRect.height) {
+          bases = null;
+          rafId = requestAnimationFrame(animate);
+          return;
         }
       }
 
-      pills.forEach((p, i) => {
-        const tilt = mouseX * [12, -10, 14][i];
-        p.el.style.transform = `translate(${p.x}px, ${p.y}px) rotateY(${tilt}deg)`;
+      // Compute current positions
+      const pts = params.map((p, i) => ({
+        x: bases[i].x + Math.sin(time * p.spd + p.px) * p.ax + mouseX * 14,
+        y: bases[i].y + Math.cos(time * p.spd * 0.75 + p.py) * p.ay + mouseY * 8,
+      }));
+
+      // Clear canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw connecting lines
+      const pairs = [[0,1],[1,2],[0,2]];
+      pairs.forEach(([a, b]) => {
+        const dx   = pts[a].x - pts[b].x;
+        const dy   = pts[a].y - pts[b].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const alpha = Math.max(0, 0.28 - dist / 420);
+
+        if (alpha <= 0) return;
+
+        // Line
+        ctx.save();
+        ctx.globalAlpha = alpha;
+        ctx.strokeStyle = PINK;
+        ctx.lineWidth   = 0.8;
+        ctx.beginPath();
+        ctx.moveTo(pts[a].x, pts[a].y);
+        ctx.lineTo(pts[b].x, pts[b].y);
+        ctx.stroke();
+
+        // Midpoint mint dot
+        const mx = (pts[a].x + pts[b].x) / 2;
+        const my = (pts[a].y + pts[b].y) / 2;
+        ctx.globalAlpha = alpha * 2.2;
+        ctx.fillStyle   = MINT;
+        ctx.beginPath();
+        ctx.arc(mx, my, 2.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      });
+
+      // Apply transforms to actual pill elements
+      pills.forEach((el, i) => {
+        const dx = pts[i].x - bases[i].x;
+        const dy = pts[i].y - bases[i].y;
+        el.style.transform = `translate(${dx}px, ${dy}px)`;
       });
 
       rafId = requestAnimationFrame(animate);
     };
 
-    let rafId = requestAnimationFrame(animate);
+    rafId = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize',    handleResize);
       cancelAnimationFrame(rafId);
+      if (heroMark.contains(canvas)) heroMark.removeChild(canvas);
+      pills.forEach(p => { p.style.transform = 'none'; });
     };
   }, []);
 
