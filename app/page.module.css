@@ -76,7 +76,10 @@
   flex-direction: column;
   gap: 10px;
   align-items: flex-start;
+  min-height: 500px;
+  min-width: 300px;
 }
+
 .pillLg {
   height: 52px;
   border-radius: 999px;

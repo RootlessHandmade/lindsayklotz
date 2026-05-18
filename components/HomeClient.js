@@ -39,9 +39,9 @@ export default function HomeClient({ posts, latest }) {
 
     // Wide triangle — lots of distance between pills
     const TRIANGLE = [
-      { tx: -180, ty: -130 },
-      { tx:    0, ty:  160 },
-      { tx:  180, ty: -130 },
+      { tx: -80, ty: -180 },
+      { tx:  60, ty:   20 },
+      { tx: -80, ty:  200 },
     ];
 
     const params = [
@@ -126,7 +126,7 @@ export default function HomeClient({ posts, latest }) {
         const dx   = pts[a].x - pts[b].x;
         const dy   = pts[a].y - pts[b].y;
         const dist = Math.sqrt(dx * dx + dy * dy);
-        const alpha = Math.max(0, 0.35 - dist / 900);
+        const alpha = Math.max(0, 0.4 - dist / 1200);
         if (alpha <= 0) return;
 
         ctx.save();
