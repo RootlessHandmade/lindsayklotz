@@ -2,7 +2,7 @@
 title: "The Cursed Course of Clickmore Keep "
 date: "2026-04-15"
 excerpt: "A Choose-Your-Own-Adventure Tale About Why Better Learning Requires Better Choices"
-tags: ["Design","Compliance","Training","Learning","Corporate"]
+tags: ["Design","Compliance","Training","Learning","Corporate","Fantasy"]
 readTime: 10
 downloadUrl: "/posts/clickmore/clickmore-guide.pdf"
 downloadLabel: "Download the Clickmore Keep case study"

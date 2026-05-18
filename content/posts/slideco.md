@@ -2,7 +2,7 @@
 title: "AI Won’t Replace Learning Designers—But It Will Replace Bad Learning"
 date: "2026-03-30"
 excerpt: "How SlideCo Industries Finally Escaped the Slide Deck Era"
-tags: ["Design","Compliance","Training","Learning","AI"]
+tags: ["Design","Compliance","Training","Learning","AI","Innovation"]
 readTime: 10
 downloadUrl: "/posts/slideco/slideco-guide.pdf"
 downloadLabel: "Download the SlideCo Industries case study"
