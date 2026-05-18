@@ -6,11 +6,11 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={styles.inner}>
         <div className={styles.brand}>
-          <div className="pill-mark pill-mark-sm">
-            <div className="p1" />
-            <div className="p2" />
-            <div className="p3" />
-          </div>
+        <div className="pill-mark pill-mark-sm">
+  <div className="p1" />
+  <div className="p2" />
+  <div className="p3" style={{ background: '#F7F5F2' }} />
+</div>
           <span className={styles.wordmark}>LINDSAY KLOTZ</span>
         </div>
         <nav className={styles.links}>
