@@ -12,36 +12,21 @@ export default function HomeClient({ posts, latest }) {
 
     if (!pill1 || !pill2 || !pill3) return;
 
-    const canvas = document.createElement('canvas');
-    canvas.style.cssText = `
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      pointer-events: none;
-      z-index: 0;
-    `;
-
-    [pill1, pill2, pill3].forEach(p => { p.style.position = 'relative'; p.style.zIndex = '1'; });
-
-    const heroMark = pill1.parentElement;
-    heroMark.style.position = 'relative';
-    heroMark.insertBefore(canvas, heroMark.firstChild);
-
-    const ctx = canvas.getContext('2d');
-
-    const PINK = '#FF3CAC';
-    const MINT = '#4DFFD2';
+    const pills = [pill1, pill2, pill3];
+    const pillSizes = [
+      { w: 180, h: 52 },
+      { w: 116, h: 52 },
+      { w: 150, h: 52 },
+    ];
 
     let mouseX = 0, mouseY = 0;
     let time = 0;
     let bases = null;
-    let heroRect = null;
 
-    // Wide triangle — lots of distance between pills
     const TRIANGLE = [
-      { tx:  20, ty: -200 },
-      { tx:  80, ty:    0 },
-      { tx:  20, ty:  200 },
+      { tx: 20, ty: -200 },
+      { tx: 20, ty:    0 },
+      { tx: 20, ty:  200 },
     ];
 
     const params = [
@@ -50,21 +35,14 @@ export default function HomeClient({ posts, latest }) {
       { ax: 12, ay: 10, px: 2.6, py: 1.9, spd: 0.58 },
     ];
 
-    const pills = [pill1, pill2, pill3];
-    const pillSizes = [
-      { w: 180, h: 52 },
-      { w: 116, h: 52 },
-      { w: 150, h: 52 },
-    ];
+    const heroMark = pill1.parentElement;
 
     const getBases = () => {
       pills.forEach(p => { p.style.transform = 'none'; });
-      heroRect = heroMark.getBoundingClientRect();
-      canvas.width  = heroRect.width;
-      canvas.height = heroRect.height;
+      const heroRect = heroMark.getBoundingClientRect();
       const cx = heroRect.width  / 2;
       const cy = heroRect.height / 2;
-      bases = TRIANGLE.map((t) => ({ x: cx + t.tx, y: cy + t.ty }));
+      bases = TRIANGLE.map(t => ({ x: cx + t.tx, y: cy + t.ty }));
     };
 
     const handleMouseMove = (e) => {
@@ -90,7 +68,7 @@ export default function HomeClient({ posts, latest }) {
         y: bases[i].y + Math.cos(time * p.spd * 0.75 + p.py) * p.ay + mouseY * 6,
       }));
 
-      // Collision separation
+      // Collision separation — no overlap
       const pts = raw.map(p => ({ ...p }));
       for (let iter = 0; iter < 4; iter++) {
         for (let i = 0; i < 3; i++) {
@@ -118,41 +96,6 @@ export default function HomeClient({ posts, latest }) {
         }
       }
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Draw lines behind pills
-      const pairs = [[0,1],[1,2],[0,2]];
-      pairs.forEach(([a, b]) => {
-        const dx   = pts[a].x - pts[b].x;
-        const dy   = pts[a].y - pts[b].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        const alpha = Math.max(0, 0.4 - dist / 1200);
-        if (alpha <= 0) return;
-
-        ctx.save();
-        ctx.globalAlpha = alpha;
-        ctx.strokeStyle = PINK;
-        ctx.lineWidth   = 0.8;
-        ctx.setLineDash([4, 6]);
-        ctx.beginPath();
-        ctx.moveTo(pts[a].x, pts[a].y);
-        ctx.lineTo(pts[b].x, pts[b].y);
-        ctx.stroke();
-        ctx.setLineDash([]);
-
-        // Midpoint mint dot
-        const mx = (pts[a].x + pts[b].x) / 2;
-        const my = (pts[a].y + pts[b].y) / 2;
-        ctx.globalAlpha = alpha * 2.5;
-        ctx.fillStyle   = MINT;
-        ctx.shadowColor = MINT;
-        ctx.shadowBlur  = 4;
-        ctx.beginPath();
-        ctx.arc(mx, my, 2.5, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.restore();
-      });
-
       // Apply transforms
       pills.forEach((el, i) => {
         const dx = pts[i].x - bases[i].x;
@@ -169,8 +112,7 @@ export default function HomeClient({ posts, latest }) {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize',    handleResize);
       cancelAnimationFrame(rafId);
-      if (heroMark.contains(canvas)) heroMark.removeChild(canvas);
-      pills.forEach(p => { p.style.transform = 'none'; p.style.position = ''; p.style.zIndex = ''; });
+      pills.forEach(p => { p.style.transform = 'none'; });
     };
   }, []);
 
