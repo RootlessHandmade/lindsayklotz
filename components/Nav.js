@@ -9,15 +9,31 @@ export default function Nav() {
   return (
     <nav className={styles.nav}>
       <Link href="/" className={styles.logo}>
-      <div className="pill-mark pill-mark-sm" style={{ transition: 'transform 0.2s ease', cursor: 'pointer' }}
-  onMouseEnter={e => e.currentTarget.style.transform = 'rotate(-8deg) scale(1.1)'}
-  onMouseLeave={e => e.currentTarget.style.transform = 'rotate(0deg) scale(1)'}
-  onMouseDown={e => e.currentTarget.style.transform = 'rotate(12deg) scale(0.95)'}
-  onMouseUp={e => e.currentTarget.style.transform = 'rotate(-8deg) scale(1.1)'}
+      <div className="pill-mark pill-mark-sm" style={{ cursor: 'pointer' }}
+  onMouseEnter={e => {
+    e.currentTarget.children[0].style.transform = 'rotate(-12deg) translateX(-2px)';
+    e.currentTarget.children[1].style.transform = 'rotate(6deg) translateX(3px)';
+    e.currentTarget.children[2].style.transform = 'rotate(-4deg) translateX(-1px)';
+  }}
+  onMouseLeave={e => {
+    e.currentTarget.children[0].style.transform = 'rotate(0deg)';
+    e.currentTarget.children[1].style.transform = 'rotate(0deg)';
+    e.currentTarget.children[2].style.transform = 'rotate(0deg)';
+  }}
+  onMouseDown={e => {
+    e.currentTarget.children[0].style.transform = 'rotate(8deg) translateX(2px)';
+    e.currentTarget.children[1].style.transform = 'rotate(-10deg) translateX(-3px)';
+    e.currentTarget.children[2].style.transform = 'rotate(5deg) translateX(2px)';
+  }}
+  onMouseUp={e => {
+    e.currentTarget.children[0].style.transform = 'rotate(-12deg) translateX(-2px)';
+    e.currentTarget.children[1].style.transform = 'rotate(6deg) translateX(3px)';
+    e.currentTarget.children[2].style.transform = 'rotate(-4deg) translateX(-1px)';
+  }}
 >
-  <div className="p1" />
-  <div className="p2" />
-  <div className="p3" />
+  <div className="p1" style={{ transition: 'transform 0.2s ease' }} />
+  <div className="p2" style={{ transition: 'transform 0.25s ease' }} />
+  <div className="p3" style={{ transition: 'transform 0.15s ease' }} />
 </div>
         <span className={styles.wordmark}>LINDSAY KLOTZ</span>
       </Link>
