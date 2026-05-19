@@ -12,45 +12,54 @@ export default function HomeClient({ posts, latest }) {
 
     if (!pill1 || !pill2 || !pill3) return;
 
+    const heroMark = pill1.parentElement;
     const pills = [pill1, pill2, pill3];
-    const pillSizes = [
+
+    heroMark.style.position = 'relative';
+    pills.forEach(p => {
+      p.style.position = 'absolute';
+      p.style.zIndex = '1';
+    });
+
+    let heroRect = heroMark.getBoundingClientRect();
+    const W = () => heroRect.width;
+    const H = () => heroRect.height;
+
+    const PILL_DEFS = [
       { w: 180, h: 52 },
       { w: 116, h: 52 },
       { w: 150, h: 52 },
     ];
 
-    let mouseX = 0, mouseY = 0;
     let time = 0;
-    let bases = null;
+    let mouseX = 0, mouseY = 0;
 
-    const TRIANGLE = [
-      { tx: 20, ty: -200 },
-      { tx: 20, ty:    0 },
-      { tx: 20, ty:  200 },
+    // Expanded radii — fills the full hero area
+    const paths = [
+      { cx: 0.40, cy: 0.40, rx: 0.42, ry: 0.38, spd: 0.28, off: 0   },
+      { cx: 0.55, cy: 0.55, rx: 0.38, ry: 0.35, spd: 0.22, off: 2.1 },
+      { cx: 0.48, cy: 0.48, rx: 0.44, ry: 0.32, spd: 0.18, off: 4.2 },
     ];
 
-    const params = [
-      { ax: 14, ay: 10, px: 0,   py: 0,   spd: 0.5  },
-      { ax: 10, ay: 14, px: 1.4, py: 1.0, spd: 0.38 },
-      { ax: 12, ay: 10, px: 2.6, py: 1.9, spd: 0.58 },
-    ];
+    const state = paths.map((p) => ({
+      x: p.cx * 400,
+      y: p.cy * 300,
+      vx: 0,
+      vy: 0,
+    }));
 
-    const heroMark = pill1.parentElement;
-
-    const getBases = () => {
-      pills.forEach(p => { p.style.transform = 'none'; });
-      const heroRect = heroMark.getBoundingClientRect();
-      const cx = heroRect.width  / 2;
-      const cy = heroRect.height / 2;
-      bases = TRIANGLE.map(t => ({ x: cx + t.tx, y: cy + t.ty }));
-    };
+    const SPRING   = 0.12;
+    const FRICTION = 0.82;
+    const BOUNCE   = 1.4;
 
     const handleMouseMove = (e) => {
       mouseX = (e.clientX - window.innerWidth  / 2) / (window.innerWidth  / 2);
       mouseY = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
     };
 
-    const handleResize = () => { bases = null; };
+    const handleResize = () => {
+      heroRect = heroMark.getBoundingClientRect();
+    };
 
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('resize',    handleResize);
@@ -58,53 +67,80 @@ export default function HomeClient({ posts, latest }) {
     let rafId;
 
     const animate = () => {
-      if (!bases) getBases();
-      if (!bases) { rafId = requestAnimationFrame(animate); return; }
+      time += 0.008;
 
-      time += 0.007;
+      const cw = W(), ch = H();
 
-      const raw = params.map((p, i) => ({
-        x: bases[i].x + Math.sin(time * p.spd + p.px) * p.ax + mouseX * 10,
-        y: bases[i].y + Math.cos(time * p.spd * 0.75 + p.py) * p.ay + mouseY * 6,
+      const targets = paths.map(p => ({
+        x: p.cx * cw + Math.sin(time * p.spd + p.off) * p.rx * cw + mouseX * 12,
+        y: p.cy * ch + Math.sin(time * p.spd * 2 + p.off) * p.ry * ch + mouseY * 8,
       }));
 
-      // Collision separation — no overlap
-      const pts = raw.map(p => ({ ...p }));
-      for (let iter = 0; iter < 4; iter++) {
+      state.forEach((s, i) => {
+        s.vx += (targets[i].x - s.x) * SPRING;
+        s.vy += (targets[i].y - s.y) * SPRING;
+        s.vx *= FRICTION;
+        s.vy *= FRICTION;
+        s.x  += s.vx;
+        s.y  += s.vy;
+      });
+
+      // Bounce collision — 3 iterations
+      for (let iter = 0; iter < 3; iter++) {
         for (let i = 0; i < 3; i++) {
           for (let j = i + 1; j < 3; j++) {
-            const aLeft  = pts[i].x - pillSizes[i].w / 2;
-            const aRight = pts[i].x + pillSizes[i].w / 2;
-            const aTop   = pts[i].y - pillSizes[i].h / 2;
-            const aBot   = pts[i].y + pillSizes[i].h / 2;
-            const bLeft  = pts[j].x - pillSizes[j].w / 2;
-            const bRight = pts[j].x + pillSizes[j].w / 2;
-            const bTop   = pts[j].y - pillSizes[j].h / 2;
-            const bBot   = pts[j].y + pillSizes[j].h / 2;
-            const ox = Math.min(aRight, bRight) - Math.max(aLeft, bLeft);
-            const oy = Math.min(aBot,   bBot)   - Math.max(aTop,  bTop);
+            const a  = state[i];
+            const b  = state[j];
+            const aw = PILL_DEFS[i].w, ah = PILL_DEFS[i].h;
+            const bw = PILL_DEFS[j].w, bh = PILL_DEFS[j].h;
+
+            const ox = Math.min(a.x+aw/2, b.x+bw/2) - Math.max(a.x-aw/2, b.x-bw/2);
+            const oy = Math.min(a.y+ah/2, b.y+bh/2) - Math.max(a.y-ah/2, b.y-bh/2);
+
             if (ox > 0 && oy > 0) {
               if (ox <= oy) {
-                const push = ox / 2 * (pts[i].x < pts[j].x ? -1 : 1);
-                pts[i].x += push; pts[j].x -= push;
+                const dir = a.x < b.x ? -1 : 1;
+                a.x += dir * ox/2; b.x -= dir * ox/2;
+                const avg = (a.vx + b.vx) / 2;
+                a.vx = avg * -BOUNCE + dir * 1.5;
+                b.vx = avg *  BOUNCE - dir * 1.5;
               } else {
-                const push = oy / 2 * (pts[i].y < pts[j].y ? -1 : 1);
-                pts[i].y += push; pts[j].y -= push;
+                const dir = a.y < b.y ? -1 : 1;
+                a.y += dir * oy/2; b.y -= dir * oy/2;
+                const avg = (a.vy + b.vy) / 2;
+                a.vy = avg * -BOUNCE + dir * 1.5;
+                b.vy = avg *  BOUNCE - dir * 1.5;
               }
             }
           }
         }
       }
 
-      // Apply transforms
+      // Clamp to bounds
+      state.forEach((s, i) => {
+        const hw = PILL_DEFS[i].w / 2, hh = PILL_DEFS[i].h / 2;
+        if (s.x < hw)      { s.x = hw;      s.vx =  Math.abs(s.vx) * 0.6; }
+        if (s.x > cw - hw) { s.x = cw - hw; s.vx = -Math.abs(s.vx) * 0.6; }
+        if (s.y < hh)      { s.y = hh;      s.vy =  Math.abs(s.vy) * 0.6; }
+        if (s.y > ch - hh) { s.y = ch - hh; s.vy = -Math.abs(s.vy) * 0.6; }
+      });
+
       pills.forEach((el, i) => {
-        const dx = pts[i].x - bases[i].x;
-        const dy = pts[i].y - bases[i].y;
-        el.style.transform = `translate(${dx}px, ${dy}px)`;
+        const s  = state[i];
+        const hw = PILL_DEFS[i].w / 2, hh = PILL_DEFS[i].h / 2;
+        el.style.left  = `${s.x - hw}px`;
+        el.style.top   = `${s.y - hh}px`;
+        el.style.width = `${PILL_DEFS[i].w}px`;
       });
 
       rafId = requestAnimationFrame(animate);
     };
+
+    heroRect = heroMark.getBoundingClientRect();
+    state.forEach((s, i) => {
+      s.x = paths[i].cx * W();
+      s.y = paths[i].cy * H();
+    });
 
     rafId = requestAnimationFrame(animate);
 
@@ -112,7 +148,15 @@ export default function HomeClient({ posts, latest }) {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize',    handleResize);
       cancelAnimationFrame(rafId);
-      pills.forEach(p => { p.style.transform = 'none'; });
+      pills.forEach(p => {
+        p.style.position = '';
+        p.style.left = '';
+        p.style.top = '';
+        p.style.width = '';
+        p.style.zIndex = '';
+        p.style.transform = 'none';
+      });
+      heroMark.style.position = '';
     };
   }, []);
 
