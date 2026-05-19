@@ -12,54 +12,67 @@ export default function HomeClient({ posts, latest }) {
 
     if (!pill1 || !pill2 || !pill3) return;
 
+    const canvas = document.createElement('canvas');
+    canvas.style.cssText = `
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    `;
+
+    [pill1, pill2, pill3].forEach(p => { p.style.position = 'relative'; p.style.zIndex = '1'; });
+
     const heroMark = pill1.parentElement;
-    const pills = [pill1, pill2, pill3];
-
     heroMark.style.position = 'relative';
-    pills.forEach(p => {
-      p.style.position = 'absolute';
-      p.style.zIndex = '1';
-    });
+    heroMark.insertBefore(canvas, heroMark.firstChild);
 
-    let heroRect = heroMark.getBoundingClientRect();
-    const W = () => heroRect.width;
-    const H = () => heroRect.height;
+    const ctx = canvas.getContext('2d');
 
-    const PILL_DEFS = [
+    const PINK = '#FF3CAC';
+    const MINT = '#4DFFD2';
+
+    let mouseX = 0, mouseY = 0;
+    let time = 0;
+    let bases = null;
+    let heroRect = null;
+
+    // Wide triangle — lots of distance between pills
+    const TRIANGLE = [
+  { tx:  20, ty: -200 },
+  { tx:  80, ty:    0 },
+  { tx:  20, ty:  200 },
+];
+
+    const params = [
+      { ax: 14, ay: 10, px: 0,   py: 0,   spd: 0.5  },
+      { ax: 10, ay: 14, px: 1.4, py: 1.0, spd: 0.38 },
+      { ax: 12, ay: 10, px: 2.6, py: 1.9, spd: 0.58 },
+    ];
+
+    const pills = [pill1, pill2, pill3];
+    const pillSizes = [
       { w: 180, h: 52 },
       { w: 116, h: 52 },
       { w: 150, h: 52 },
     ];
 
-    let time = 0;
-    let mouseX = 0, mouseY = 0;
-
-    // Expanded radii — fills the full hero area
-    const paths = [
-      { cx: 0.40, cy: 0.40, rx: 0.42, ry: 0.38, spd: 0.28, off: 0   },
-      { cx: 0.55, cy: 0.55, rx: 0.38, ry: 0.35, spd: 0.22, off: 2.1 },
-      { cx: 0.48, cy: 0.48, rx: 0.44, ry: 0.32, spd: 0.18, off: 4.2 },
-    ];
-
-    const state = paths.map((p) => ({
-      x: p.cx * 400,
-      y: p.cy * 300,
-      vx: 0,
-      vy: 0,
-    }));
-
-    const SPRING   = 0.12;
-    const FRICTION = 0.82;
-    const BOUNCE   = 1.4;
+    const getBases = () => {
+      pills.forEach(p => { p.style.transform = 'none'; });
+      heroRect = heroMark.getBoundingClientRect();
+      canvas.width  = heroRect.width;
+      canvas.height = heroRect.height;
+      const cx = heroRect.width  / 2;
+      const cy = heroRect.height / 2;
+      bases = TRIANGLE.map((t) => ({ x: cx + t.tx, y: cy + t.ty }));
+    };
 
     const handleMouseMove = (e) => {
       mouseX = (e.clientX - window.innerWidth  / 2) / (window.innerWidth  / 2);
       mouseY = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
     };
 
-    const handleResize = () => {
-      heroRect = heroMark.getBoundingClientRect();
-    };
+    const handleResize = () => { bases = null; };
 
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('resize',    handleResize);
@@ -67,80 +80,88 @@ export default function HomeClient({ posts, latest }) {
     let rafId;
 
     const animate = () => {
-      time += 0.008;
+      if (!bases) getBases();
+      if (!bases) { rafId = requestAnimationFrame(animate); return; }
 
-      const cw = W(), ch = H();
+      time += 0.007;
 
-      const targets = paths.map(p => ({
-        x: p.cx * cw + Math.sin(time * p.spd + p.off) * p.rx * cw + mouseX * 12,
-        y: p.cy * ch + Math.sin(time * p.spd * 2 + p.off) * p.ry * ch + mouseY * 8,
+      const raw = params.map((p, i) => ({
+        x: bases[i].x + Math.sin(time * p.spd + p.px) * p.ax + mouseX * 10,
+        y: bases[i].y + Math.cos(time * p.spd * 0.75 + p.py) * p.ay + mouseY * 6,
       }));
 
-      state.forEach((s, i) => {
-        s.vx += (targets[i].x - s.x) * SPRING;
-        s.vy += (targets[i].y - s.y) * SPRING;
-        s.vx *= FRICTION;
-        s.vy *= FRICTION;
-        s.x  += s.vx;
-        s.y  += s.vy;
-      });
-
-      // Bounce collision — 3 iterations
-      for (let iter = 0; iter < 3; iter++) {
+      // Collision separation
+      const pts = raw.map(p => ({ ...p }));
+      for (let iter = 0; iter < 4; iter++) {
         for (let i = 0; i < 3; i++) {
           for (let j = i + 1; j < 3; j++) {
-            const a  = state[i];
-            const b  = state[j];
-            const aw = PILL_DEFS[i].w, ah = PILL_DEFS[i].h;
-            const bw = PILL_DEFS[j].w, bh = PILL_DEFS[j].h;
-
-            const ox = Math.min(a.x+aw/2, b.x+bw/2) - Math.max(a.x-aw/2, b.x-bw/2);
-            const oy = Math.min(a.y+ah/2, b.y+bh/2) - Math.max(a.y-ah/2, b.y-bh/2);
-
+            const aLeft  = pts[i].x - pillSizes[i].w / 2;
+            const aRight = pts[i].x + pillSizes[i].w / 2;
+            const aTop   = pts[i].y - pillSizes[i].h / 2;
+            const aBot   = pts[i].y + pillSizes[i].h / 2;
+            const bLeft  = pts[j].x - pillSizes[j].w / 2;
+            const bRight = pts[j].x + pillSizes[j].w / 2;
+            const bTop   = pts[j].y - pillSizes[j].h / 2;
+            const bBot   = pts[j].y + pillSizes[j].h / 2;
+            const ox = Math.min(aRight, bRight) - Math.max(aLeft, bLeft);
+            const oy = Math.min(aBot,   bBot)   - Math.max(aTop,  bTop);
             if (ox > 0 && oy > 0) {
               if (ox <= oy) {
-                const dir = a.x < b.x ? -1 : 1;
-                a.x += dir * ox/2; b.x -= dir * ox/2;
-                const avg = (a.vx + b.vx) / 2;
-                a.vx = avg * -BOUNCE + dir * 1.5;
-                b.vx = avg *  BOUNCE - dir * 1.5;
+                const push = ox / 2 * (pts[i].x < pts[j].x ? -1 : 1);
+                pts[i].x += push; pts[j].x -= push;
               } else {
-                const dir = a.y < b.y ? -1 : 1;
-                a.y += dir * oy/2; b.y -= dir * oy/2;
-                const avg = (a.vy + b.vy) / 2;
-                a.vy = avg * -BOUNCE + dir * 1.5;
-                b.vy = avg *  BOUNCE - dir * 1.5;
+                const push = oy / 2 * (pts[i].y < pts[j].y ? -1 : 1);
+                pts[i].y += push; pts[j].y -= push;
               }
             }
           }
         }
       }
 
-      // Clamp to bounds
-      state.forEach((s, i) => {
-        const hw = PILL_DEFS[i].w / 2, hh = PILL_DEFS[i].h / 2;
-        if (s.x < hw)      { s.x = hw;      s.vx =  Math.abs(s.vx) * 0.6; }
-        if (s.x > cw - hw) { s.x = cw - hw; s.vx = -Math.abs(s.vx) * 0.6; }
-        if (s.y < hh)      { s.y = hh;      s.vy =  Math.abs(s.vy) * 0.6; }
-        if (s.y > ch - hh) { s.y = ch - hh; s.vy = -Math.abs(s.vy) * 0.6; }
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw lines behind pills
+      const pairs = [[0,1],[1,2],[0,2]];
+      pairs.forEach(([a, b]) => {
+        const dx   = pts[a].x - pts[b].x;
+        const dy   = pts[a].y - pts[b].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const alpha = Math.max(0, 0.4 - dist / 1200);
+        if (alpha <= 0) return;
+
+        ctx.save();
+        ctx.globalAlpha = alpha;
+        ctx.strokeStyle = PINK;
+        ctx.lineWidth   = 0.8;
+        ctx.setLineDash([4, 6]);
+        ctx.beginPath();
+        ctx.moveTo(pts[a].x, pts[a].y);
+        ctx.lineTo(pts[b].x, pts[b].y);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // Midpoint mint dot
+        const mx = (pts[a].x + pts[b].x) / 2;
+        const my = (pts[a].y + pts[b].y) / 2;
+        ctx.globalAlpha = alpha * 2.5;
+        ctx.fillStyle   = MINT;
+        ctx.shadowColor = MINT;
+        ctx.shadowBlur  = 4;
+        ctx.beginPath();
+        ctx.arc(mx, my, 2.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
       });
 
+      // Apply transforms
       pills.forEach((el, i) => {
-        const s  = state[i];
-        const hw = PILL_DEFS[i].w / 2, hh = PILL_DEFS[i].h / 2;
-        el.style.left  = `${s.x - hw}px`;
-        el.style.top   = `${s.y - hh}px`;
-        el.style.width = `${PILL_DEFS[i].w}px`;
+        const dx = pts[i].x - bases[i].x;
+        const dy = pts[i].y - bases[i].y;
+        el.style.transform = `translate(${dx}px, ${dy}px)`;
       });
 
       rafId = requestAnimationFrame(animate);
     };
-
-    heroRect = heroMark.getBoundingClientRect();
-    state.forEach((s, i) => {
-      s.x = paths[i].cx * W();
-      s.y = paths[i].cy * H();
-    });
 
     rafId = requestAnimationFrame(animate);
 
@@ -148,15 +169,8 @@ export default function HomeClient({ posts, latest }) {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('resize',    handleResize);
       cancelAnimationFrame(rafId);
-      pills.forEach(p => {
-        p.style.position = '';
-        p.style.left = '';
-        p.style.top = '';
-        p.style.width = '';
-        p.style.zIndex = '';
-        p.style.transform = 'none';
-      });
-      heroMark.style.position = '';
+      if (heroMark.contains(canvas)) heroMark.removeChild(canvas);
+      pills.forEach(p => { p.style.transform = 'none'; p.style.position = ''; p.style.zIndex = ''; });
     };
   }, []);
 
