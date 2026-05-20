@@ -15,9 +15,9 @@ export default function HomeClient({ posts, latest }) {
     let mouseX = 0, mouseY = 0;
     let time = 0;
 
-    const BOUNCE   = 0.7;
-    const FRICTION = 0.88;
-    const SPRING   = 0.07;
+    const BOUNCE   = 0.3;
+    const FRICTION = 0.98;
+    const SPRING   = 0.03;
 
     const pills = [
       { el: pill1, x: 0, y: 0, vx: 0, vy: 0, w: 180, h: 52 },
