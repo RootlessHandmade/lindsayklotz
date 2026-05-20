@@ -12,120 +12,111 @@ export default function HomeClient({ posts, latest }) {
 
     if (!pill1 || !pill2 || !pill3) return;
 
-    let mouseX = 0, mouseY = 0;
-    let time = 0;
-
-    const BOUNCE   = 0.8;
-    const FRICTION = 0.98;
-    const SPRING   = 0.06;
-
-    const pills = [
-      { el: pill1, x: 0, y: 0, vx: 0, vy: 0, w: 180, h: 52 },
-      { el: pill2, x: 0, y: 0, vx: 0, vy: 0, w: 116, h: 52 },
-      { el: pill3, x: 0, y: 0, vx: 0, vy: 0, w: 150, h: 52 },
+    const pills = [pill1, pill2, pill3];
+    const pillSizes = [
+      { w: 180, h: 52 },
+      { w: 116, h: 52 },
+      { w: 150, h: 52 },
     ];
 
+    let mouseX = 0, mouseY = 0;
+    let time = 0;
     let bases = null;
 
+    const heroMark = pill1.parentElement;
+
+    // Slow gentle sine wave paths — each pill on its own independent path
+    const paths = [
+      { ax: 55, ay: 40, px: 0,   py: 0,   spd: 0.18 },
+      { ax: 45, ay: 50, px: 2.1, py: 1.4, spd: 0.14 },
+      { ax: 60, ay: 35, px: 4.2, py: 2.8, spd: 0.11 },
+    ];
+
     const getBases = () => {
-      pills.forEach(p => { p.el.style.transform = 'none'; });
-      bases = pills.map(p => {
-        const r = p.el.getBoundingClientRect();
-        return { left: r.left, top: r.top };
-      });
+      pills.forEach(p => { p.el && (p.el.style.transform = 'none'); });
+      const heroRect = heroMark.getBoundingClientRect();
+      const cx = heroRect.width  / 2;
+      const cy = heroRect.height / 2;
+      // Spread pills across the area in a loose triangle
+      bases = [
+        { x: cx - 40, y: cy - 60 },
+        { x: cx + 20, y: cy + 10 },
+        { x: cx - 20, y: cy + 70 },
+      ];
     };
 
     const handleMouseMove = (e) => {
-      mouseX = (e.clientX - window.innerWidth / 2) / (window.innerWidth / 2);
+      mouseX = (e.clientX - window.innerWidth  / 2) / (window.innerWidth  / 2);
       mouseY = (e.clientY - window.innerHeight / 2) / (window.innerHeight / 2);
     };
 
+    const handleResize = () => { bases = null; };
+
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('resize',    handleResize);
+
+    let rafId;
 
     const animate = () => {
       if (!bases) getBases();
+      if (!bases) { rafId = requestAnimationFrame(animate); return; }
 
-      time += 0.012;
+      time += 0.006;
 
-      const targets = [
-        {
-          x: mouseX * 60 + Math.sin(time * 1.1) * 30,
-          y: mouseY * 20 + Math.sin(time * 1.1) * 40,
-        },
-        {
-          x: mouseX * -50 + Math.sin(time * 0.8 + 1) * 25,
-          y: mouseY * 25 + Math.sin(time * 0.8 + 1) * 35,
-        },
-        {
-          x: mouseX * 70 + Math.sin(time * 1.3 + 2) * 35,
-          y: mouseY * -15 + Math.sin(time * 1.3 + 2) * 45,
-        },
-      ];
+      // Compute smooth positions — pure sine wave, no spring/bounce
+      const pts = paths.map((p, i) => ({
+        x: bases[i].x + Math.sin(time * p.spd + p.px) * p.ax + mouseX * 8,
+        y: bases[i].y + Math.cos(time * p.spd * 0.7 + p.py) * p.ay + mouseY * 5,
+      }));
 
-      pills.forEach((p, i) => {
-        p.vx += (targets[i].x - p.x) * SPRING;
-        p.vy += (targets[i].y - p.y) * SPRING;
-        p.vx *= FRICTION;
-        p.vy *= FRICTION;
-        p.x  += p.vx;
-        p.y  += p.vy;
-      });
-
+      // Gentle separation — push apart if overlapping, no bounce
       for (let iter = 0; iter < 3; iter++) {
-        for (let i = 0; i < pills.length; i++) {
-          for (let j = i + 1; j < pills.length; j++) {
-            const a = pills[i];
-            const b = pills[j];
+        for (let i = 0; i < 3; i++) {
+          for (let j = i + 1; j < 3; j++) {
+            const aL = pts[i].x - pillSizes[i].w / 2;
+            const aR = pts[i].x + pillSizes[i].w / 2;
+            const aT = pts[i].y - pillSizes[i].h / 2;
+            const aB = pts[i].y + pillSizes[i].h / 2;
+            const bL = pts[j].x - pillSizes[j].w / 2;
+            const bR = pts[j].x + pillSizes[j].w / 2;
+            const bT = pts[j].y - pillSizes[j].h / 2;
+            const bB = pts[j].y + pillSizes[j].h / 2;
 
-            const aLeft  = bases[i].left + a.x;
-            const aTop   = bases[i].top  + a.y;
-            const aRight = aLeft + a.w;
-            const aBot   = aTop  + a.h;
+            const ox = Math.min(aR, bR) - Math.max(aL, bL);
+            const oy = Math.min(aB, bB) - Math.max(aT, bT);
 
-            const bLeft  = bases[j].left + b.x;
-            const bTop   = bases[j].top  + b.y;
-            const bRight = bLeft + b.w;
-            const bBot   = bTop  + b.h;
-
-            const overlapX = Math.min(aRight, bRight) - Math.max(aLeft, bLeft);
-            const overlapY = Math.min(aBot,   bBot)   - Math.max(aTop,  bTop);
-
-            if (overlapX > 0 && overlapY > 0) {
-              if (overlapX <= overlapY) {
-                const push = overlapX / 2;
-                const dir  = aLeft < bLeft ? -1 : 1;
-                a.x += dir * push;
-                b.x -= dir * push;
-                const avgVx = (a.vx + b.vx) / 2;
-                a.vx = avgVx * -BOUNCE;
-                b.vx = avgVx *  BOUNCE;
+            if (ox > 0 && oy > 0) {
+              if (ox <= oy) {
+                const push = ox / 2 * (pts[i].x < pts[j].x ? -1 : 1);
+                pts[i].x += push;
+                pts[j].x -= push;
               } else {
-                const push = overlapY / 2;
-                const dir  = aTop < bTop ? -1 : 1;
-                a.y += dir * push;
-                b.y -= dir * push;
-                const avgVy = (a.vy + b.vy) / 2;
-                a.vy = avgVy * -BOUNCE;
-                b.vy = avgVy *  BOUNCE;
+                const push = oy / 2 * (pts[i].y < pts[j].y ? -1 : 1);
+                pts[i].y += push;
+                pts[j].y -= push;
               }
             }
           }
         }
       }
 
-      pills.forEach((p, i) => {
-        const tilt = mouseX * [12, -10, 14][i];
-        p.el.style.transform = `translate(${p.x}px, ${p.y}px) rotateY(${tilt}deg)`;
+      // Apply transforms
+      pills.forEach((el, i) => {
+        const dx = pts[i].x - bases[i].x;
+        const dy = pts[i].y - bases[i].y;
+        el.style.transform = `translate(${dx}px, ${dy}px)`;
       });
 
       rafId = requestAnimationFrame(animate);
     };
 
-    let rafId = requestAnimationFrame(animate);
+    rafId = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize',    handleResize);
       cancelAnimationFrame(rafId);
+      pills.forEach(p => { p.style.transform = 'none'; });
     };
   }, []);
 
