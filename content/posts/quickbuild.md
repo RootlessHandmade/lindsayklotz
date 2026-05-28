@@ -26,7 +26,7 @@ Greg approved it. The project manager marked the design phase complete. Someone 
 ![quickbuild](/static/images/quickbuild/qb-two.png)
 
 Then the storyboard landed with Tessa Triggerwell, QuickBuild’s learning developer, who opened the file, opened Storyline, and then opened the storyboard again — this time more slowly.
-The problem was not that the storyboard was empty; it was full of **unresolved decisions.**
+The problem was not that the storyboard was empty; it was full of unresolved decisions.
 
 ### The Storyboard Looked Finished
 
@@ -34,7 +34,7 @@ The problem was not that the storyboard was empty; it was full of **unresolved d
 
 At first glance, the storyboard looked ready. It had slide titles, narration, visual notes, developer comments, and enough formatted columns to feel official.
 
-But filling in boxes is not the same as **solving the learning experience.**
+But filling in boxes is not the same as solving the learning experience.
 
 As Tessa reviewed it, the gaps showed quickly. “Add customer response activity” did not explain what the learner would do, how the interaction worked, or what it was meant to teach. A scenario asked learners to respond to an angry customer, but the choices were placeholders, the consequences were missing, and the feedback simply said, “Explain why choice is right/wrong.”
 
@@ -59,7 +59,7 @@ Every vague note became a delay.
 
 Tessa was no longer just building the course. She was designing what the storyboard had skipped.
 
-That is the danger of a weak storyboard: it does not remove work. **It relocates it.**
+That is the danger of a weak storyboard: it does not remove work. It relocates it.
 
 And once that work moves into development, it gets heavier. Changing a line in a storyboard is easy. Changing a built interaction with layers, states, triggers, captions, alt text, review comments, and one button having a personal crisis is not.
 The team had not saved time. They had created something much more expensive: decision debt.
@@ -106,7 +106,7 @@ Storyline can build the course; it should not have to discover it.
 
 For the next project, QuickBuild changed the handoff.
 
-Before anything moved into Storyline, Nina, Tessa, and Greg reviewed the storyboard together. Not just for content approval, but for **build readiness.**
+Before anything moved into Storyline, Nina, Tessa, and Greg reviewed the storyboard together. Not just for content approval, but for build readiness.
 
 They asked better questions.
 - Does every screen have a clear job?
@@ -116,9 +116,9 @@ They asked better questions.
 - Are accessibility needs planned before the visual design is locked?
 
 And maybe the most important question:
-**Has the stakeholder approved the experience, not just the topic?**
+Has the stakeholder approved the experience, not just the topic?
 
-The process did not make storyboarding slower. It made the right parts **more intentional.**
+The process did not make storyboarding slower. It made the right parts more intentional.
 
 The team still moved quickly. 
 
@@ -138,7 +138,7 @@ But it **cannot** rescue a storyboard that never made the hard decisions.
 
 A good storyboard does not slow development down.
 
-**It keeps development from becoming damage control.**
+It keeps development from becoming damage control.
 
 At QuickBuild Solutions, the team eventually learned that speed was not the enemy. The real problem was skipping clarity and calling it efficiency.
 
